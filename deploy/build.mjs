@@ -99,7 +99,23 @@ for (const entry of entries) {
   copied.push(entry.name);
 }
 
-// While the site is behind a password this is belt and braces — a crawler
+// Force every request through functions/_middleware.js.
+//
+// Pages generates a _routes.json itself when it finds a functions directory,
+// and what it generates sends requests it treats as static straight to the
+// asset store without the middleware running. That left the password gate
+// covering some paths and not others, which is worse than no gate at all
+// because it looks like it is working.
+//
+// An empty exclude list means no exceptions: every request, page or asset,
+// is checked. The cost is that every request counts as a function
+// invocation against the free 100,000 a day, which is the deliberate trade
+// while the site is gated. Deleting functions/ when the password comes off
+// makes static requests free and unlimited again, and this file moot.
+await writeFile(join(out, "_routes.json"),
+  JSON.stringify({ version: 1, include: ["/*"], exclude: [] }, null, 2) + "\n");
+
+// While the site is behind a password this is belt and braces: a crawler
 // cannot get past a 401. It matters the moment the password comes off.
 await writeFile(join(out, "robots.txt"),
   "# The assessment is still being reviewed. Remove these two lines when\n" +
