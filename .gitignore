@@ -1,0 +1,17 @@
+# The published site, assembled by deploy/build.mjs. Cloudflare rebuilds it
+# on every push, so it is never committed.
+dist/
+
+# Nothing the site needs comes from npm, but the deploy host may create this.
+node_modules/
+
+# Word and spreadsheet drafts collect in the root while report material is
+# being brought in. They are working documents, not site content, and are not
+# published. If one ever does need to be tracked, force it with `git add -f`.
+*.docx
+*.doc
+*.xlsx
+*.xls
+
+# Commit messages prepared for pasting.
+commit-msg.txt

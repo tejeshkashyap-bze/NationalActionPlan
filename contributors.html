@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contributors – BZE National Action Plan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div id="napCrumbs"></div>
+    <div class="breadcrumbs srOnly">
+      <a href="index.html">← Back to home</a>
+    </div>
+
+    <!-- No individual names on this page. The repository is public, and
+         naming contributors here would publish them beyond the reports they
+         agreed to appear in. The wording below follows the acknowledgements
+         in the Hunter and Gladstone Regional Readiness Reports, where named
+         acknowledgements belong. -->
+
+    <div class="detailCard">
+      <div class="note">Contributors</div>
+      <h2 class="detailTitle">Acknowledgements</h2>
+
+      <p class="sectionText" style="margin-top:14px;">
+        The National Action Plan and BZE's Regional Readiness Reports have drawn on the
+        expertise of industry, government, academia and community. Beyond Zero Emissions
+        is grateful to our community of engineering, science, economics, business,
+        finance and communications experts who have helped shape this work.
+      </p>
+
+      <p class="sectionText">
+        BZE's work is made possible with the support of our generous donor community.
+      </p>
+
+      <p class="sectionText">
+        Contributors to each regional assessment are named in the acknowledgements of
+        that region's Regional Readiness Report.
+      </p>
+
+      <div id="contribCallout" style="margin-top:22px;"></div>
+    </div>
+  </div>
+  <script src="regions.js"></script>
+  <script src="nap.js"></script>
+  <script>
+    NAP.shell({ page: "contributors", crumbs: [["Overview","index.html"],"Contributors"] });
+
+    // Same callout the indicator pages use, so the invitation to take part is
+    // worded once in nap.js rather than three times across the site.
+    document.getElementById("contribCallout").innerHTML = NAP.helpCallout(
+      "Take part in the National Action Plan",
+      ["The list of contributors is always growing. The assessments depend on people " +
+       "who know a region or a field well enough to test what we have written."],
+      "contribute to this work");
+  </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<!-- concept: Findings sit inside the accordion, directly under the indicator rows of the
+     category they cover — the order the report reads in. Collapsed by default behind a
+     one-line teaser, so the region page still opens as a scoreboard and nothing new
+     appears until a reader goes looking. Section tables, charts and maps open with the
+     findings, because in the report they belong to the section, not to any one indicator. -->
+<!-- replaces: city.html -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Concept A — Findings in place · Region</title>
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="findings-concept.css" />
+<style>
+/* Concept-level only. Nothing here belongs in styles.css until a direction wins. */
+
+.fcInline {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--wash);
+  margin: 14px 0 4px;
+}
+
+.fcInline > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: var(--r);
+}
+.fcInline > summary::-webkit-details-marker { display: none; }
+.fcInline > summary:hover { background: #eaf2f8; }
+
+.fcTeaser {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  flex: 1 1 auto;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fcInline > summary .fcCount { flex: none; margin-left: auto; }
+.fcInline > summary::after {
+  content: "";
+  flex: none;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--ink-3);
+  border-bottom: 2px solid var(--ink-3);
+  transform: rotate(45deg) translate(-2px, -2px);
+}
+.fcInline[open] > summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+.fcInline[open] > summary { border-bottom: 1px solid var(--line); border-radius: var(--r) var(--r) 0 0; }
+
+.fcInlineBody { padding: 20px 18px 22px; background: var(--card); border-radius: 0 0 var(--r) var(--r); }
+
+@media (max-width: 640px) {
+  .fcInline > summary .fcCount { display: none; }
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="napCrumbs"></div>
+    <div id="fcHost"></div>
+  </div>
+
+  <script src="../regions.js"></script>
+  <script src="../data.js"></script>
+  <script src="../scores.js"></script>
+  <script src="../learn-data.js"></script>
+  <script src="../nap.js"></script>
+  <script src="findings-concept-data.js"></script>
+  <script src="findings-concept-render.js"></script>
+  <script>
+    NAP.shell({ page: "region", crumbs: [["Overview", "../index.html"], "Concept A — findings in place"] });
+    window.FC_MODE = "inline";
+  </script>
+  <script src="findings-concept-page.js"></script>
+</body>
+</html>

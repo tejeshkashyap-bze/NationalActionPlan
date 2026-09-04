@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Critical Success Criteria – National Action Plan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap wideShell">
+    <div id="napCrumbs"></div>
+
+    <div class="hero tight">
+      <div class="eyebrow">Methodology</div>
+      <h1 class="wide">Critical Success Criteria</h1>
+      <p class="lede">Five themes, the groups within them, and every indicator a region is
+        assessed against — laid out as the framework is drawn. Indicators with a published
+        methodology are highlighted; select one to read it.</p>
+      <div class="tiles" id="tiles"></div>
+    </div>
+
+    <div class="band">
+      <div class="secHead">
+        <h2>The criteria</h2>
+        <div class="secNote">Scores are reported per region, not here. Open a region to
+          see how it was assessed.</div>
+      </div>
+
+      <div class="cscKeys">
+        <span class="cscKey"><span class="cscKeySwatch"></span> Methodology published</span>
+        <span class="cscKey"><span class="cscKeySwatch noDoc"></span> Not yet documented</span>
+        <span class="cscKey" id="methodCount"></span>
+      </div>
+
+      <div class="cscScroll">
+        <div class="cscWall" id="wall"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="learn-data.js"></script>
+  <script src="indicator-icons.js"></script>
+  <script src="nap.js"></script>
+  <script>
+    NAP.shell({ page: "criteria", crumbs: [["Overview", "index.html"], "Criteria"] });
+
+    const items   = NAP.allItems();
+    const nMethod = items.filter(i => NAP.hasMethod(i.id)).length;
+
+    document.getElementById("tiles").innerHTML = [
+      [CSC.length, "themes"],
+      [CSC.reduce((n, p) => n + p.groups.length, 0), "groups"],
+      [items.length, "indicators"],
+      [nMethod, "with methodology"],
+    ].map(([n, l]) => `<div class="tile"><div class="tileN">${n}</div>` +
+      `<div class="tileL">${l}</div></div>`).join("");
+
+    document.getElementById("methodCount").textContent =
+      `${nMethod} of ${items.length} indicators have a published methodology`;
+
+    // The wall: five theme columns, groups stacked within each. This page is
+    // the framework and the methodology behind it — no scores. Scores are
+    // reported per region, on city.html and on the indicator page.
+    document.getElementById("wall").innerHTML = CSC.map((p, pi) => {
+      const ids = p.groups.flatMap(g => g.items.map(i => i.id));
+      const doc = ids.filter(id => NAP.hasMethod(id)).length;
+
+      const groups = p.groups.map(g => {
+        const rows = g.items.map(it => {
+          const has = NAP.hasMethod(it.id);
+          return `<a class="cscInd ${has ? "isDoc" : "noDoc"}" ` +
+            `href="learn.html?id=${encodeURIComponent(it.id)}" ` +
+            `title="${has ? "Methodology published" : "Methodology not yet documented"}">` +
+            `<span class="cscIndDot"></span>` +
+            `<span class="cscIndName">${NAP.esc(it.title)}</span></a>`;
+        }).join("");
+        return `<div class="cscGroup">` +
+          `<div class="cscGroupHead">${NAP.esc(g.groupTitle)}</div>` +
+          `<div class="cscGroupList">${rows}</div></div>`;
+      }).join("");
+
+      return `<section class="cscTheme">` +
+        `<div class="cscThemeHead">${themeIcon(p.pillarId)}` +
+          `<div class="cscThemeNum">Theme ${String(pi + 1).padStart(2, "0")}</div>` +
+          `<div class="cscThemeName">${NAP.esc(p.pillarTitle)}</div>` +
+          `<div class="cscThemeMeta">${ids.length} indicators · ${doc} documented</div>` +
+        `</div>${groups}</section>`;
+    }).join("");
+  </script>
+</body>
+</html>

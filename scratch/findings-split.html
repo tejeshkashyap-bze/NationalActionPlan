@@ -1,0 +1,84 @@
+<!doctype html>
+<!-- concept: Two columns inside each theme. Indicator rows on the left, that category's
+     findings pinned beside them on the right, so the score and the reasoning are on screen
+     together and neither has to be opened. Wide-screen first; below tablet the rail drops
+     under the rows and behaves like Concept A. The trade-off is a much busier page. -->
+<!-- replaces: city.html -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Concept C — Split view · Region</title>
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="findings-concept.css" />
+<style>
+/* Concept-level only. This concept needs more room than the 1080px shell. */
+
+.wrap { max-width: 1380px; }
+
+.grpSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 34px;
+  align-items: start;
+  margin-bottom: 30px;
+}
+
+.grpMain { min-width: 0; }
+
+.fcRail {
+  min-width: 0;
+  position: sticky;
+  top: 24px;
+  background: var(--wash);
+  border: 1px solid var(--line);
+  border-radius: var(--rl);
+  padding: 18px 20px 20px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+
+.fcRailHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.fcRailHead .fcCount { margin-left: auto; }
+
+.fcRail .fcBody p,
+.fcRail .fcList li { font-size: 13.5px; line-height: 1.6; }
+.fcRail .fcScope { font-size: 12px; padding: 8px 12px; }
+.fcRail .fcCap { font-size: 12.5px; }
+.fcRail .dataTable { font-size: 12px; }
+
+/* Below tablet the rail is just a block under the rows — Concept A without
+   the collapse. */
+@media (max-width: 1060px) {
+  .grpSplit { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .fcRail { position: static; max-height: none; }
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="napCrumbs"></div>
+    <div id="fcHost"></div>
+  </div>
+
+  <script src="../regions.js"></script>
+  <script src="../data.js"></script>
+  <script src="../scores.js"></script>
+  <script src="../learn-data.js"></script>
+  <script src="../nap.js"></script>
+  <script src="findings-concept-data.js"></script>
+  <script src="findings-concept-render.js"></script>
+  <script>
+    NAP.shell({ page: "region", crumbs: [["Overview", "../index.html"], "Concept C — split view"] });
+    window.FC_MODE = "split";
+  </script>
+  <script src="findings-concept-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Indicator – National Action Plan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div id="napCrumbs"></div>
+    <div id="content"></div>
+  </div>
+
+  <script src="regions.js"></script>
+  <script src="data.js"></script>
+  <script src="scores.js"></script>
+  <script src="learn-data.js"></script>
+  <script src="indicator-icons.js"></script>
+  <script src="nap.js"></script>
+  <script>
+    // criterion.html — one indicator, for one region.
+    //
+    // Reached from a row on city.html. The evidence and the context behind
+    // it sit in four tabs down the main column, in the order the assessment
+    // is read: Evidence, Grading scale, How it's assessed, Previous rounds.
+    // The score and the comparisons sit in the aside.
+    //
+    // About the grading scale: every signed-off evidence entry opens with a
+    // paragraph titled "Indicator grading scale", followed by the assessment
+    // prose. This page separates the two — the scale becomes the Grading
+    // scale tab, the prose becomes the Evidence tab. Nothing is rewritten;
+    // the scale paragraph is rendered verbatim, just moved into the slot it
+    // belongs in. An entry that does not follow the shape keeps its first
+    // paragraph in the body, and the Grading scale tab falls back to the
+    // structured scale in learn-data.js.
+
+    const SCALE_PREFIX = "<strong>Indicator grading scale</strong>";
+
+    const TABS = [
+      ["evidence", "Evidence"],
+      ["scale",    "Grading scale"],
+      ["method",   "How it's assessed"],
+      ["history",  "Previous rounds"],
+    ];
+
+    const id   = NAP.qs("id");
+    const city = NAP.qs("city");
+    const el   = document.getElementById("content");
+    const item = id ? NAP.itemById(id) : null;
+
+    if (!item) {
+      NAP.shell({ page: "criterion", crumbs: [["Overview", "index.html"], "Indicator"] });
+      el.innerHTML = `<div class="hero tight"><h1 class="wide">Indicator not found</h1>` +
+        `<p class="lede">${id ? `No indicator has the id <code>${NAP.esc(id)}</code>.`
+          : "No indicator was selected."} ` +
+        `<a href="CSC.html">Browse the criteria</a>.</p></div>`;
+    } else {
+      const rName = city ? regionName(city) : "";
+      const round = city ? NAP.latestRound(city) : null;
+      const score = round ? round.scores[id] : undefined;
+
+      // Assessed in ANY region, in any round — not just the one being
+      // viewed. An indicator scored in a newer region but not in an older
+      // one is a developed indicator, so the older region's page keeps its
+      // ordinary "not yet assessed here" state rather than the call for
+      // expertise below.
+      const developed = NAP.isIndicatorAssessed(id);
+
+      document.title = `${item.title} – National Action Plan`;
+
+      NAP.shell({
+        page: "criterion",
+        crumbs: [
+          ["Overview", "index.html"],
+          ...(city
+            ? [[rName, `city.html?city=${encodeURIComponent(city)}`]]
+            : [["Criteria", "CSC.html"]]),
+          item.pillarTitle,
+          item.title,
+        ],
+      });
+
+      // Nothing to put behind four tabs: no evidence in any region and, for
+      // all 26 of these, no methodology in learn-data.js either. Ask for
+      // help instead of showing empty tabs.
+      function heroBlock(sub) {
+        return `<div class="hero tight"><div class="iHead">` +
+          indicatorIcon(id) +
+          `<div>` +
+            `<div class="eyebrow">${NAP.esc(item.pillarTitle)} · ` +
+              `${NAP.esc(item.groupTitle)}</div>` +
+            `<h1 class="wide">${NAP.esc(item.title)}</h1>` +
+            (sub ? `<div class="iSub">${sub}</div>` : "") +
+          `</div>` +
+        `</div></div>`;
+      }
+
+      if (!developed) {
+        el.innerHTML = heroBlock("") + NAP.undevelopedCallout(item);
+      } else if (city) {
+        loadEvidence();
+      } else {
+        draw({}, {});
+      }
+
+      // Evidence lives in one file per region, each assigning to the same
+      // window.CITY_EVIDENCE global, so it is loaded on demand rather than
+      // with a script tag — the region is only known from the query string.
+      function loadEvidence() {
+        loadScript(`evidence-${city}.js`, () => {
+          const ev = window.CITY_EVIDENCE || {};
+          // References are a separate file per region, and only a region
+          // whose sources have been mapped has one. A region without one
+          // still draws; its evidence simply carries no markers to resolve.
+          loadScript(`references-${city}.js`,
+            () => draw(ev, window.CITY_REFERENCES || {}),
+            () => draw(ev, {}));
+        }, () => draw({}, {}));
+      }
+
+      function loadScript(src, ok, fail) {
+        const tag = document.createElement("script");
+        tag.src = src;
+        tag.onload  = ok;
+        tag.onerror = fail || ok;
+        document.head.appendChild(tag);
+      }
+
+      function draw(evidence, references) {
+        const rounds = evidence[id] || [];
+        const refs   = (references && references[id]) || [];
+        const latest = rounds[0] || null;
+        const { scale, body } = splitEvidence(latest);
+
+        el.innerHTML =
+          heroBlock(subtitle()) +
+          `<div class="iPage">` +
+            `<div class="iMain">` +
+              tabStrip() +
+              pane("evidence", evidencePane(body, refs)) +
+              pane("scale", scalePane(scale)) +
+              pane("method", methodPane()) +
+              pane("history", historyPane(rounds)) +
+            `</div>` +
+            aside() +
+          `</div>`;
+
+        wireTabs();
+        wireRefJumps();
+
+        // No date here on purpose. The round date in scores.js and the date
+        // on the evidence entry do not always agree — Gladstone is scored in
+        // the September 2025 round but its evidence entries are dated March
+        // 2026 — and two different dates at the top of the page reads as a
+        // bug. The round is in the aside; the evidence dates are in the
+        // Previous rounds tab, where the difference is visible rather than
+        // smoothed over.
+        function subtitle() {
+          if (!city) return "Select a region to see how this indicator scores there.";
+          if (typeof score === "number") return `Assessed for ${NAP.esc(rName)}`;
+          return `Not yet assessed in ${NAP.esc(rName)}.`;
+        }
+
+        function aside() {
+          const others = NAP.assessedRegions().filter(r => r.key !== city);
+          const rows = others.map(r => {
+            const rd = NAP.latestRound(r.key);
+            const v = rd ? rd.scores[id] : undefined;
+            return `<a class="xRow" href="criterion.html?id=${encodeURIComponent(id)}` +
+              `&city=${encodeURIComponent(r.key)}">` +
+              `<span class="xName">${NAP.esc(r.name)}</span>` +
+              `<span class="xWord">${typeof v === "number" ? NAP.esc(NAP.word(v)) : "not scored"}</span>` +
+              NAP.sBox(v) +
+            `</a>`;
+          }).join("");
+
+          return `<aside class="iAside">` +
+            `<div class="iAsideTitle">Score</div>` +
+            `<div class="iScoreBig">${NAP.sBox(score, "lg")}` +
+              `<div class="iScoreWord">${NAP.esc(NAP.word(score))}</div></div>` +
+            `<div class="iFacts">` +
+              fact("Theme", item.pillarTitle) +
+              fact("Group", item.groupTitle) +
+              (round ? fact("Round", round.date) : "") +
+            `</div>` +
+            `<div class="iAsideTitle spaced">Same indicator elsewhere</div>` +
+            (rows || `<div class="note">No other region has been assessed yet.</div>`) +
+          `</aside>`;
+        }
+
+        function fact(label, value) {
+          return `<div class="iFactRow"><span class="iFactLabel">${NAP.esc(label)}</span>` +
+            `<span class="iFactValue">${NAP.esc(value)}</span></div>`;
+        }
+
+        function evidencePane(paras, refs) {
+          if (paras.length) {
+            return `<div class="iProse">` +
+              paras.map(p => linkMarkers(
+                p.trim().startsWith("<") ? p : `<p>${p}</p>`, refs)).join("") +
+            `</div>` + refsBlock(refs);
+          }
+          if (!city) {
+            return `<div class="note">Choose a region from ` +
+              `<a href="map.html">Regions</a> to read the assessment for this indicator.</div>`;
+          }
+          if (typeof score === "number") {
+            return `<div class="note">This indicator is scored but has no evidence ` +
+              `text recorded yet.</div>`;
+          }
+          return `<div class="note">Not yet assessed in ${NAP.esc(rName)}.</div>`;
+        }
+
+        function scalePane(signedOff) {
+          if (signedOff) return `<div class="iProse">${signedOff}</div>`;
+
+          const d = LEARN_DATA[id];
+          const rows = (d && d.scoringDescriptions) ? d.scoringDescriptions : null;
+          if (!rows) {
+            return `<div class="note">No grading scale has been recorded for this ` +
+              `indicator yet.</div>`;
+          }
+          return rows.map(sd => {
+            const here = sd.score === score;
+            return `<div class="scaleRow" data-current="${here}">` + NAP.sBox(sd.score) +
+              `<div><div class="scaleLabel">` +
+                `${NAP.esc(sd.label || NAP.word(sd.score))}</div>` +
+              `<div class="scaleChars">` +
+                `${(sd.characteristics || []).map(NAP.esc).join(" · ")}</div></div>` +
+              (here ? `<div class="scaleHere">THIS REGION</div>` : "") +
+            `</div>`;
+          }).join("");
+        }
+
+        // The methodology from learn-data.js. A full page has room for the
+        // weighting table and the scoring descriptions in full, which is
+        // what the drawer could not show.
+        function methodPane() {
+          const d = LEARN_DATA[id];
+          if (!d) {
+            return `<div class="note">The methodology behind this indicator has ` +
+              `not been published yet. ${NAP.esc(NAP.V3_NOTE)}</div>`;
+          }
+          const out = [];
+
+          if (d.purpose) {
+            out.push(head("Purpose"), `<div class="iProse"><p>${d.purpose}</p></div>`);
+          }
+
+          if (d.frameworkIntro || (d.frameworkItems || []).length) {
+            out.push(head("Assessment framework"), `<div class="iProse">` +
+              (d.frameworkIntro ? `<p>${d.frameworkIntro}</p>` : "") +
+              ((d.frameworkItems || []).length
+                ? `<ul>${d.frameworkItems.map(f => `<li>${f}</li>`).join("")}</ul>` : "") +
+            `</div>`);
+          }
+
+          if ((d.dataSources || []).length) {
+            out.push(head("Data sources"), `<div class="iProse"><ul>` +
+              d.dataSources.map(x => `<li>${x}</li>`).join("") + `</ul></div>`);
+          }
+
+          if ((d.scoringProcess || []).length) {
+            out.push(head("Scoring process"), `<div class="iProse"><ol>` +
+              d.scoringProcess.map(x =>
+                `<li><strong>${NAP.esc(x.label)}</strong> — ${x.desc}</li>`).join("") +
+            `</ol></div>`);
+          }
+
+          if ((d.weightingTable || []).length) {
+            out.push(head("Weighting"), `<div class="tableWrap">` +
+              `<table class="dataTable" aria-label="Weighting table"><thead><tr>` +
+                `<th>Dimension</th><th>Weight</th>` +
+                `<th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>` +
+              `</tr></thead><tbody>` +
+              d.weightingTable.map(w =>
+                `<tr><td>${w.dimension}</td><td>${w.weight}</td>` +
+                (w.scores || []).map(x => `<td>${x}</td>`).join("") + `</tr>`).join("") +
+              `</tbody></table></div>`);
+          }
+
+          if ((d.scoringDescriptions || []).length) {
+            out.push(head("Scoring descriptions"), `<div class="tableWrap">` +
+              `<table class="dataTable" aria-label="Scoring descriptions">` +
+              `<thead><tr><th>Score</th><th>Description</th>` +
+              `<th>Key characteristics</th></tr></thead><tbody>` +
+              d.scoringDescriptions.map(sd =>
+                `<tr><td>${sd.score}</td><td>${sd.label || ""}</td><td>` +
+                ((sd.characteristics || []).length
+                  ? `<ul class="cellList">` +
+                    sd.characteristics.map(c => `<li>${c}</li>`).join("") + `</ul>`
+                  : "") +
+                `</td></tr>`).join("") +
+              `</tbody></table></div>`);
+          }
+
+          return out.join("");
+        }
+
+        function historyPane(all) {
+          if (!city) {
+            return `<div class="note">Choose a region to see its assessment ` +
+              `history for this indicator.</div>`;
+          }
+          if (!all.length) {
+            return `<div class="note">No rounds recorded for this indicator in ` +
+              `${NAP.esc(rName)}.</div>`;
+          }
+          if (all.length === 1) {
+            return `<div class="note">${NAP.esc(all[0].date)} is the only round ` +
+              `recorded for this indicator in ${NAP.esc(rName)}.</div>`;
+          }
+          return all.map((r, i) =>
+            `<div class="scaleRow" data-current="${i === 0}">` + NAP.sBox(r.score) +
+            `<div><div class="scaleLabel">${NAP.esc(r.date)}` +
+              `${i === 0 ? " · latest" : ""}</div>` +
+            `<div class="scaleChars">${NAP.esc(NAP.word(r.score))}</div></div></div>`
+          ).join("") +
+          `<div class="dLinks"><a class="btn" href="previous.html?id=` +
+            `${encodeURIComponent(id)}&city=${encodeURIComponent(city)}">` +
+            `Round-by-round detail</a></div>`;
+        }
+
+        // The evidence files carry a plain marker per citation —
+        // <sup class="refMark">1,2</sup>, written where the report put it.
+        // Each number becomes a jump link to its entry in the list below,
+        // but only when this region has a reference list and the numbers
+        // resolve; otherwise the marker stays exactly as it was written.
+        function linkMarkers(html, refs) {
+          if (!refs.length) return html;
+          const have = new Set(refs.map(r => String(r.n)));
+          return html.replace(/<sup class="refMark">([\d,]+)<\/sup>/g, (m, list) => {
+            const nums = list.split(",");
+            if (!nums.every(n => have.has(n))) return m;
+            return `<sup class="refMark">` + nums.map(n =>
+              `<a data-ref="${n}" tabindex="0" role="link" ` +
+              `title="Jump to reference ${n}">${n}</a>`).join(",") + `</sup>`;
+          });
+        }
+
+        // The sources behind this indicator, numbered 1 upward in the order
+        // a reader meets them. `report` on each entry is the number the
+        // printed report used; it is kept in the data for traceability and
+        // deliberately not shown. Link text is the host, so a long address
+        // cannot break the line — the full URL is the link's title.
+        function refsBlock(refs) {
+          if (!refs.length) return "";
+          return `<div class="iRefs">` +
+            `<div class="iSubHead">References</div>` +
+            `<ol class="refList">` +
+            refs.map(r =>
+              `<li class="refItem" id="ref-${r.n}">${NAP.esc(r.cite)}` +
+              (r.url ? ` <a class="refLink" href="${NAP.esc(r.url)}" target="_blank" ` +
+                `rel="noopener" title="${NAP.esc(r.url)}">${NAP.esc(host(r.url))}</a>` : "") +
+              `</li>`).join("") +
+            `</ol></div>`;
+        }
+
+        function host(url) {
+          try { return new URL(url).host.replace(/^www\./, ""); }
+          catch (e) { return url; }
+        }
+
+        function head(name) {
+          return `<div class="iSubHead">${NAP.esc(name)}</div>`;
+        }
+      }
+    }
+
+    /* ---------- shared bits ---------- */
+
+    function splitEvidence(round) {
+      const paras = (round && round.paragraphs) ? round.paragraphs.slice() : [];
+      let scale = null;
+      if (paras.length && paras[0].startsWith(SCALE_PREFIX)) {
+        scale = paras.shift().slice(SCALE_PREFIX.length);
+      }
+      return { scale, body: paras };
+    }
+
+    // The open tab is in the URL hash, so a tab can be linked to and
+    // survives a reload.
+    function initialTab() {
+      const want = decodeURIComponent(location.hash.slice(1));
+      return TABS.some(([k]) => k === want) ? want : TABS[0][0];
+    }
+
+    function tabStrip() {
+      const active = initialTab();
+      return `<div class="tabs" role="tablist">` +
+        TABS.map(([key, label]) =>
+          `<button class="tab" type="button" role="tab" data-tab="${key}" ` +
+          `id="tab-${key}" aria-controls="pane-${key}" ` +
+          `aria-selected="${key === active}" tabindex="${key === active ? 0 : -1}">` +
+          `${NAP.esc(label)}</button>`
+        ).join("") +
+      `</div>`;
+    }
+
+    function pane(key, inner) {
+      const active = initialTab();
+      return `<div class="pane" role="tabpanel" id="pane-${key}" ` +
+        `aria-labelledby="tab-${key}"${key === active ? "" : " hidden"}>${inner}</div>`;
+    }
+
+    // A marker scrolls to its entry and marks it rather than setting a
+    // hash — the tab strip already owns the hash, and a #ref-1 in the URL
+    // would send a reload to the wrong tab.
+    function wireRefJumps() {
+      if (!document.querySelector(".iRefs")) return;
+
+      function go(n) {
+        const li = document.getElementById(`ref-${n}`);
+        if (!li) return;
+        document.querySelectorAll(".refItem.isTarget")
+          .forEach(x => x.classList.remove("isTarget"));
+        li.classList.add("isTarget");
+        li.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      document.querySelectorAll(".refMark a").forEach(a => {
+        a.addEventListener("click", () => go(a.dataset.ref));
+        a.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(a.dataset.ref); }
+        });
+      });
+    }
+
+    function wireTabs() {
+      const tabs = [...document.querySelectorAll(".tab")];
+      const panes = [...document.querySelectorAll(".pane")];
+
+      function show(key) {
+        tabs.forEach(t => {
+          const on = t.dataset.tab === key;
+          t.setAttribute("aria-selected", String(on));
+          t.tabIndex = on ? 0 : -1;
+        });
+        panes.forEach(p => { p.hidden = p.id !== `pane-${key}`; });
+        // Opened from the filesystem rather than a server, replaceState
+        // throws. The tabs still work; the URL just does not follow.
+        try { history.replaceState(null, "", `#${key}`); } catch (e) {}
+      }
+
+      tabs.forEach((t, i) => {
+        t.addEventListener("click", () => show(t.dataset.tab));
+        t.addEventListener("keydown", e => {
+          const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+          if (!step) return;
+          e.preventDefault();
+          const next = tabs[(i + step + tabs.length) % tabs.length];
+          next.focus();
+          show(next.dataset.tab);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

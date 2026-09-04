@@ -1,0 +1,296 @@
+# National Action Plan — working notes for Claude
+
+A clickable prototype of BZE's National Action Plan: the regional assessment
+criteria, the methodology behind each indicator, and per-region scores.
+
+**Read `review/comments.json` before starting design work.** That file is how the
+team hands you work. See *The review loop* below.
+
+## What this repo is
+
+Plain static HTML/CSS/JS. No framework, no bundler, no build step. Pages are
+hand-written HTML that pull shared data from top-level JS files and render it
+client-side:
+
+| File | Role |
+| --- | --- |
+| `index.html` | Overview — national coverage, then every region as a card |
+| `map.html` | Clickable map; pins are rendered from `regions.js` |
+| `city.html` | A region: theme averages, then indicators in an accordion |
+| `CSC.html` | Criteria library — the five-theme wall. Structure and methodology only; no scores |
+| `criterion.html` | One indicator, for one region — four tabs: Evidence, Grading scale, How it's assessed, Previous rounds. Where a row on `city.html` goes |
+| `learn.html`, `assess*.html`, `previous.html` | Older indicator detail pages |
+| `contributors.html`, `editor.html` | Contributor list; scoring editor |
+| `styles.css` | The whole design system — single stylesheet, tokens at the top |
+| `nap.js` | The site shell (header, breadcrumbs) and the shared helpers |
+| `indicator-drawer.js` | **Unused.** The side panel that used to open when an indicator was clicked, replaced by `criterion.html` in August 2026. No page loads it; safe to delete |
+| `indicator-icons.js` | One line glyph per assessed indicator, plus the id → glyph map. `indicatorIcon(id)` returns the badge, or `""` for an indicator with no glyph |
+| `regions.js` | The 16 regions — key, display name, state, map position |
+| `data.js` | Criteria structure (pillars → groups → items) |
+| `scores.js` | Per-region scores, by round |
+| `learn-data.js`, `evidence-*.js` | Methodology and evidence content (large) |
+| `references-*.js` | One list of sources per indicator, per assessed region. Pairs with the citation markers in the evidence text — see *Citations and references* |
+
+The design came from `scratch/nap-concept-a-report.html` and was folded into
+`styles.css` in August 2026. That concept file is the reference for how the
+system is meant to look.
+
+`CSC.html` was rebuilt in August 2026 from
+`scratch/csc-report-columns.html`: the criteria now read as five theme
+columns laid out the way the framework is drawn in the reports, rather than
+as an accordion. Its CSS is section 18 of `styles.css`; the accordion in
+section 7 stays because `city.html` still uses it. Every indicator row
+carries `.isDoc` or `.noDoc`, from `NAP.hasMethod(id)` — a truthy entry in
+`learn-data.js` — so the page shows which methodologies are published. The
+page carries no scores at all: it is the framework and the methodology behind
+it, and scores are reported per region on `city.html` and on the indicator
+page. It loads only `data.js`, `learn-data.js`, `indicator-icons.js` and
+`nap.js` — no `scores.js`, no `regions.js`.
+
+### House rules
+
+1. **Never add a build step.** No npm dependencies for anything the site needs,
+   no framework, no transpiling. `main` is published live by GitHub Pages,
+   which serves the committed files as-is — `.nojekyll` at the repo root turns
+   Jekyll off and must stay there.
+2. **`styles.css` is the design system.** Change the variables and shared
+   classes there rather than piling up inline styles or per-page `<style>`
+   blocks. Exception: files in `scratch/` may do whatever they like.
+3. **Most markup is generated at runtime.** A visual change often lives in a
+   template string inside `data.js`, `learn.html` or `CSC.html`, not in static
+   HTML. Grep for the class name before assuming.
+4. **`review/` and `package.json` are dev-only.** They are not part of the
+   deployed site. Never add a `<script src="review/overlay.js">` to a page — the
+   dev server injects it into HTML responses at request time, which is what
+   keeps it out of production.
+5. **The header is rendered, not copied.** There is no templating, so
+   `nap.js` builds the persistent header and breadcrumbs at run time. A page
+   opts in with `<div id="napCrumbs"></div>` in the markup and a
+   `NAP.shell({ page, crumbs })` call once it knows what it is showing.
+   Don't paste a copy of the header into a page.
+6. **Score vocabulary lives in `nap.js`.** `NAP.WORDS` maps 1–5 to the band
+   names. Individual indicators also have their own grading scale — the
+   structured one in `learn-data.js` (`scoringDescriptions`) and the
+   signed-off one inside each evidence entry. Don't hard-code band names in
+   a page.
+7. **The score ramp is switchable.** The default is the BZE briefing-sheet
+   palette, with 1 and 2 swapped so the worst score is the loudest. Two
+   alternates are defined in the "Score marks and the colour ramp" section
+   and are selected from the `<html>` tag:
+   `data-ramp="sequential"` (one-hue blue sweep) or `data-ramp="traffic"`
+   (red / amber / green). Each score carries an `--sN-ink` alongside its
+   `--sN`, so a mark never has to guess which fills are light — change a
+   colour and its ink travels with it.
+8. Australian English in all copy (organise, prioritise, colour).
+
+## Citations and references
+
+The reports cite their sources — the Hunter and Gladstone reports with numbered
+endnotes, the Port Hedland report with author-date in the prose and a list per
+indicator. Those citations were carried into the site for Hunter Valley and
+Gladstone in August 2026, and for Port Hedland in September 2026, in two
+halves:
+
+- **In the evidence text** — a marker per citation, written as
+  `<sup class="refMark">1,2</sup>` at the point the report put it. Nothing
+  else in the evidence prose changed: strip the markers and the file is
+  byte-for-byte what was signed off.
+- **In `references-<region>.js`** — `window.CITY_REFERENCES`, keyed by
+  indicator id, one list per indicator. Entries are numbered from 1 within
+  each indicator, in the order a reader meets them, so a marker's number is
+  a position in that indicator's list and nothing more. `report` on each
+  entry keeps the number the printed report used, for tracing an entry back
+  to the PDF; it is data only and is never shown. For Port Hedland, `report`
+  is the entry's position in that indicator's own printed list, since the
+  report has no single numbered sequence.
+
+`criterion.html` renders the list under the assessment on the Evidence tab
+and turns each marker into a jump link. It does not use the URL hash for
+that — the tab strip owns the hash. `previous.html` renders the same list
+under the latest round only; an older round keeps its markers unresolved
+rather than borrowing a newer list. A region with no `references-` file
+draws exactly as before.
+
+Kwinana has no reference file yet, so its pages probe for one and get a 404 in
+the console — the same optional-file pattern as the region photo slot, and not
+a fault to chase. Port Hedland has a file, but it covers 19 of its 24
+indicators; the five federal-policy indicators whose evidence text is still
+Kwinana's are left out deliberately, and their pages simply render no
+References block.
+
+When a new region's report is brought in, both halves have to move together.
+A marker whose number has no entry is left as plain text rather than linked,
+so a half-finished import degrades quietly rather than rendering a dead link.
+
+One thing to watch: `editor.html` writes evidence paragraphs back through
+Quill. An entry edited there could lose its markers, and nothing checks for
+that yet.
+
+## The review loop
+
+The team reviews visually in the browser and hands you structured comments.
+
+```
+npm run dev        → http://localhost:5173   (zero dependencies, Node 18+)
+```
+
+They press `r`, click any element, and type what should change. Each comment is
+appended to `review/comments.json`.
+
+**When asked to action comments:**
+
+1. Read `review/comments.json`.
+2. Work only on `status: "open"` comments. Group them by `page`, then by the
+   file that actually owns the markup.
+3. Use `target.selector` plus `target.text` and `target.html` to find the source.
+   Remember rule 3 above — the selector describes the *rendered* DOM.
+4. `target.styleHints` records the computed styles at review time (font-size,
+   colour, padding, radius…), which tells you what the reviewer was reacting to.
+5. Make the changes. Prefer editing `styles.css` variables and shared classes
+   over one-off overrides.
+6. Set each handled comment's `status` to `"done"` in `review/comments.json`
+   (leave everything else in the entry untouched). Open browser tabs pick the
+   change up automatically. Don't clear or archive the file — the **Clear**
+   button in the overlay is the reviewer's call.
+7. Summarise what changed per comment number, and flag anything you chose not to
+   do and why.
+
+Don't clear or archive `comments.json` — the **Clear** button in the overlay is
+the reviewer's call, and it's how they mark a round finished.
+
+### Publishing
+
+`main` is live at <https://www.nationalactionplan.org.au>, published by
+Cloudflare Pages, which rebuilds on every push. Anything merged to `main` is on
+the site about a minute later. For anything structural, work on a branch: every
+branch gets its own preview URL and `main` stays untouched until you merge.
+
+The site is **not** the repository. `deploy/build.mjs` assembles it into
+`dist/`, leaving the working notes, `review/`, `scratch/`, the source documents
+and the older unlinked pages behind. That script is not a build step for the
+site: nothing is bundled or rewritten, and the served pages are byte-for-byte
+the files here. Its list is an exclusion list, so a new page or evidence file
+publishes automatically; edit it only to keep something new OFF the site.
+
+A shared password sits in front of the whole site, from
+`functions/_middleware.js`. That directory must stay at the repository root:
+Cloudflare does not look for it inside `dist/`. The password lives in the
+`SITE_PASSWORD` environment variable in Cloudflare and is never committed.
+
+The repo is public, so treat everything committed as published, whether or not
+the deploy filter serves it. The password gates the website, not the source.
+
+Full detail, including the Cloudflare settings and what to do if it needs
+setting up again, is in `hosting-cloudflare.md` in the project.
+
+### Comment shape
+
+```json
+{
+  "id": "cmszsn3x41",
+  "seq": 1,
+  "createdAt": "2026-08-19T07:52:19.096Z",
+  "status": "open",
+  "reviewer": "Tejesh",
+  "page": "index.html",
+  "category": "type",
+  "priority": "high",
+  "comment": "Make these nav pills smaller — 32px is too big.",
+  "target": {
+    "selector": "a.homeNavCard:nth-of-type(1)",
+    "tag": "a",
+    "classes": "homeNavCard",
+    "text": "Contributors",
+    "html": "<a class=\"homeNavCard\" href=\"contributors.html\">Contributors</a>",
+    "ancestors": "div.container › div.homeNav",
+    "rect": { "x": 60, "y": 355, "w": 375, "h": 122 },
+    "styleHints": { "font-size": "32px", "padding": "22px 20px", "…": "…" }
+  }
+}
+```
+
+`id` is the stable key. `seq` is just the display number.
+
+`page` values starting `scratch/` are comments on a throwaway concept, not the
+real site — fix them in the concept file, not in the deployed pages.
+
+## The scratchpad
+
+`scratch/` holds throwaway design concepts, browsable at `/scratch/` with a
+side-by-side compare view. Nothing on the real site links to it.
+
+Use it whenever a request is exploratory — *"try a different home page"*,
+*"what would this look like with more whitespace"*. Build the idea as a new file
+in `scratch/` rather than editing `index.html`, so the deployed pages stay
+stable until a concept is approved.
+
+- Name files by intent: `home-editorial.html`, `csc-two-column.html`.
+- Add the metadata comments so the gallery can describe them:
+  `<!-- concept: … -->` and `<!-- replaces: index.html -->`.
+- Link `../styles.css` so concepts inherit the design system, then override in a
+  page-level `<style>` block. A concept exploring a different look may ignore it.
+- Offer two or three genuinely different directions rather than one.
+- Only port a concept into the real pages when asked. Porting means folding the
+  concept's CSS into `styles.css` properly — not copying a `<style>` block
+  across.
+
+## Comments and git
+
+`review/comments.json` is committed, so two reviewers can end up with duplicate
+`seq` numbers or a duplicated entry after a merge. Keep both sides when
+resolving a conflict in that file, then run:
+
+```
+npm run review:normalise
+```
+
+which dedupes by `id` and renumbers `seq` chronologically.
+
+Archived batches live in `review/archive/` and are also committed — they're the
+record of what each design round asked for. Never edit or delete an archive.
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Serve the site with review overlay + live reload |
+| `npm start` | Same, and open a browser |
+| `npm run dev -- --port 4000` | Use a specific port |
+| `npm run dev:noreview` | Serve exactly what deploys — no overlay |
+| `npm run review:show` | Print current comments to the terminal |
+| `npm run review:normalise` | Dedupe + renumber after a git merge |
+
+## Indicators assessed ahead of their methodology
+
+Three indicators were scored for the first time in the August 2026 round
+(Port Hedland and Kwinana) before their methodology was published: water and
+wastewater, housing, and community engagement. Their pages say the
+methodology is due with Version 3 of the assessment process, from
+`NAP.V3_NOTE` in `nap.js` — one sentence, used by both `learn.html` (through
+`NAP.noMethodCallout`) and the "How it's assessed" tab on `criterion.html`.
+Change the wording there, not in either page.
+
+The line is tied to *assessed but not documented*, so it appears and
+disappears on its own: write an indicator up in `learn-data.js` and it goes
+away; score a new one before its methodology lands and it appears. The 26
+indicators never assessed anywhere keep the plain call for expertise
+instead — nothing is promised for them.
+
+## Evidence and the grading scale
+
+Every signed-off entry in an `evidence-<region>.js` file starts with a
+paragraph titled **Indicator grading scale**, followed by the assessment
+prose. This was true of all 87 rounds across the four regions as at
+August 2026.
+
+`indicator-drawer.js` relies on that shape: it lifts the scale paragraph into
+a collapsed block at the top of the drawer and renders the rest as the
+evidence body. Nothing is rewritten and nothing is dropped — the paragraph is
+shown verbatim, just moved into the slot it belongs in. If an entry does not
+follow the shape, its first paragraph stays in the body where it was written.
+
+Don't "fix" the duplication by editing evidence text. The scale living in
+both `learn-data.js` and the evidence entries is a content question for the
+team, not something to resolve in a template.
+
+Full human-facing docs: `review/README.md` and `scratch/README.md`.
