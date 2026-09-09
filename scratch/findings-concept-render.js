@@ -124,9 +124,15 @@ window.FC = (function () {
     return stop > 40 ? first.slice(0, stop + 1) : first.slice(0, 180) + (first.length > 180 ? "…" : "");
   }
 
-  /* "7 findings · 2 recommendations" where the report used its own sub-headings,
-     "5 paragraphs" where it wrote prose. Counting what the report actually put
-     there, rather than imposing one vocabulary on both. */
+  /* NOT CURRENTLY RENDERED. Review comments #3 to #5 took the count off the
+     summary line, so a collapsed block now shows its tag and nothing else.
+     Kept because it is the only place that knows how to describe a block in
+     the report's own vocabulary, and putting a count back is a one-line
+     change if that turns out to be wanted somewhere.
+
+     "7 findings · 2 recommendations" where the report used its own
+     sub-headings, "5 paragraphs" where it wrote prose. Counting what the
+     report actually put there, rather than imposing one vocabulary on both. */
   function counts(block) {
     const bits = [];
     /* A context block is prose that happens to contain a list or two, so

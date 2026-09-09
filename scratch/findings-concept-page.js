@@ -93,8 +93,7 @@
           return `<div class="grp grpSplit">
             <div class="grpMain">${name}${rows}</div>
             <aside class="fcRail" id="fc-${NAP.esc(g.groupId)}">
-              <div class="fcRailHead"><span class="fcTag">Key findings and recommendations</span>
-                <span class="fcCount">${NAP.esc(FC.counts(block))}</span></div>
+              <div class="fcRailHead"><span class="fcTag">Key findings and recommendations</span></div>
               <div class="fcRailBody">
                 ${FC.scopeHTML(block)}
                 <div class="fcBody">${FC.bodyHTML(block.body, block.refs, "g-" + g.groupId)}</div>
@@ -108,7 +107,6 @@
           <details class="fcInline" id="fc-${NAP.esc(g.groupId)}">
             <summary>
               <span class="fcTag">Key findings and recommendations</span>
-              <span class="fcCount">${NAP.esc(FC.counts(block))}</span>
             </summary>
             <div class="fcInlineBody">
               ${FC.scopeHTML(block)}
@@ -132,7 +130,6 @@
         <details class="fcInline fcContext" id="ctx-${NAP.esc(p.pillarId)}">
           <summary>
             <span class="fcTag fcTagCtx">Context</span>
-            <span class="fcCount">${NAP.esc(FC.counts(ctx))}</span>
           </summary>
           <div class="fcInlineBody">
             ${FC.scopeHTML(ctx)}
@@ -179,7 +176,6 @@
           <header class="fcCardHead">
             <div class="fcCardCat">${NAP.esc((b.covers || []).map(t => t).join(" · ") || groupTitle(b.group))}</div>
             <h3>${NAP.esc(b.heading)}</h3>
-            <div class="fcCount">${NAP.esc(FC.counts(b))}</div>
           </header>
           ${FC.scopeHTML(b)}
           <div class="fcBody">${FC.bodyHTML(b.body, b.refs, "b-" + FC.anchorFor(b))}</div>

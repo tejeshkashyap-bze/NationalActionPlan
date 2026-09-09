@@ -1,43 +1,43 @@
 {
   "version": 1,
   "project": "National-Action-Plan",
-  "updatedAt": "2026-09-09T06:38:53.053Z",
+  "updatedAt": "2026-09-09T07:32:16.979Z",
   "comments": [
     {
-      "id": "cmttq9aut1",
-      "seq": 1,
-      "createdAt": "2026-09-09T06:38:40.949Z",
+      "id": "cmtts3x283",
+      "seq": 3,
+      "createdAt": "2026-09-09T07:30:29.024Z",
       "status": "done",
       "reviewer": "",
       "page": "scratch/findings-inline.html",
       "url": "http://localhost:5173/scratch/findings-inline.html",
       "category": "layout",
       "priority": "normal",
-      "comment": "I don't want a preview of the text here.",
+      "comment": "Don't want this text here",
       "target": {
-        "selector": "#ctx-enabling-infrastructure > summary > span.fcTeaser:nth-of-type(2)",
+        "selector": "#ctx-enabling-infrastructure > summary > span.fcCount:nth-of-type(2)",
         "tag": "span",
         "elementId": "",
-        "classes": "fcTeaser",
-        "text": "Today, Queensland is powered by 31% renewable energy.34 Current system planning, aligned with AEMO\u2019s Step Change scenario, projects that this share will rise to 88% by 2035 if only committed and anticipated generation and transmission projects proceed.",
-        "html": "<span class=\"fcTeaser\">Today, Queensland is powered by 31% renewable energy.<sup class=\"refMark\">34</sup> Current system planning, aligned with AEMO\u2019s Step Change scenario, projects that this share will rise to 88% by 2035 if only committed and anticipated generation and transmission projects proceed.</span>",
+        "classes": "fcCount",
+        "text": "13 paragraphs \u00b7 1 table \u00b7 2 figures",
+        "html": "<span class=\"fcCount\">13 paragraphs \u00b7 1 table \u00b7 2 figures</span>",
         "ancestors": "section.pillar \u203a div.pBody \u203a details.fcInline \u203a summary",
         "rect": {
-          "x": 255.02,
-          "y": 646.34,
-          "w": 650.61,
-          "h": 39.15
+          "x": 917.64,
+          "y": 647.54,
+          "w": 185.03,
+          "h": 18.4
         },
         "styleHints": {
-          "display": "flow-root",
-          "font-size": "13.5px",
+          "display": "block",
+          "font-size": "11.5px",
           "font-weight": "400",
-          "line-height": "19.575px",
-          "color": "rgb(74, 95, 109)",
+          "line-height": "18.4px",
+          "color": "rgb(125, 143, 154)",
           "background-color": "rgba(0, 0, 0, 0)",
           "border-radius": "0px",
           "padding": "0px",
-          "margin": "0px",
+          "margin": "0px 0px 0px 662.615px",
           "text-align": "start"
         }
       },
@@ -48,39 +48,127 @@
       }
     },
     {
-      "id": "cmttq9k712",
-      "seq": 2,
-      "createdAt": "2026-09-09T06:38:53.053Z",
+      "id": "cmtts47484",
+      "seq": 4,
+      "createdAt": "2026-09-09T07:30:42.056Z",
       "status": "done",
       "reviewer": "",
       "page": "scratch/findings-inline.html",
       "url": "http://localhost:5173/scratch/findings-inline.html",
       "category": "layout",
       "priority": "normal",
-      "comment": "Don't want a preview of the content here.",
+      "comment": "Don't want this text here",
       "target": {
-        "selector": "#fc-energy-system > summary > span.fcTeaser:nth-of-type(2)",
+        "selector": "#fc-local-government-policy > summary > span.fcCount:nth-of-type(2)",
         "tag": "span",
         "elementId": "",
-        "classes": "fcTeaser",
-        "text": "Gladstone has strong potential to become a major Renewable Energy Industrial Precinct, supported by a robust pipeline of solar, wind, and storage projects in surrounding regions that already exceed the trajectory outlined in AEMO\u2019s Green Energy Exports scenario.",
-        "html": "<span class=\"fcTeaser\">Gladstone has strong potential to become a major Renewable Energy Industrial Precinct, supported by a robust pipeline of solar, wind, and storage projects in surrounding regions that already exceed the trajectory outlined in AEMO\u2019s Green Energy Exports scenario.</span>",
+        "classes": "fcCount",
+        "text": "6 paragraphs",
+        "html": "<span class=\"fcCount\">6 paragraphs</span>",
         "ancestors": "div.pBody \u203a div.grp \u203a details.fcInline \u203a summary",
         "rect": {
-          "x": 319.69,
-          "y": 1001.22,
-          "w": 698.88,
-          "h": 39.15
+          "x": 1030.56,
+          "y": 2121.63,
+          "w": 72.1,
+          "h": 18.4
         },
         "styleHints": {
-          "display": "flow-root",
-          "font-size": "13.5px",
+          "display": "block",
+          "font-size": "11.5px",
           "font-weight": "400",
-          "line-height": "19.575px",
-          "color": "rgb(74, 95, 109)",
+          "line-height": "18.4px",
+          "color": "rgb(125, 143, 154)",
           "background-color": "rgba(0, 0, 0, 0)",
           "border-radius": "0px",
           "padding": "0px",
+          "margin": "0px 0px 0px 597.688px",
+          "text-align": "start"
+        }
+      },
+      "viewport": {
+        "w": 1278,
+        "h": 1304,
+        "dpr": 1.5
+      }
+    },
+    {
+      "id": "cmtts4lz35",
+      "seq": 5,
+      "createdAt": "2026-09-09T07:31:01.311Z",
+      "status": "done",
+      "reviewer": "",
+      "page": "scratch/findings-inline.html",
+      "url": "http://localhost:5173/scratch/findings-inline.html",
+      "category": "layout",
+      "priority": "normal",
+      "comment": "Don't want any text here",
+      "target": {
+        "selector": "#fc-community-benefits-impacts > summary > span.fcCount:nth-of-type(2)",
+        "tag": "span",
+        "elementId": "",
+        "classes": "fcCount",
+        "text": "5 paragraphs",
+        "html": "<span class=\"fcCount\">5 paragraphs</span>",
+        "ancestors": "div.pBody \u203a div.grp \u203a details.fcInline \u203a summary",
+        "rect": {
+          "x": 1030.56,
+          "y": 2349.34,
+          "w": 72.1,
+          "h": 18.4
+        },
+        "styleHints": {
+          "display": "block",
+          "font-size": "11.5px",
+          "font-weight": "400",
+          "line-height": "18.4px",
+          "color": "rgb(125, 143, 154)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-radius": "0px",
+          "padding": "0px",
+          "margin": "0px 0px 0px 597.688px",
+          "text-align": "start"
+        }
+      },
+      "viewport": {
+        "w": 1278,
+        "h": 1304,
+        "dpr": 1.5
+      }
+    },
+    {
+      "id": "cmtts68cz6",
+      "seq": 6,
+      "createdAt": "2026-09-09T07:32:16.979Z",
+      "status": "done",
+      "reviewer": "",
+      "page": "scratch/findings-inline.html",
+      "url": "http://localhost:5173/scratch/findings-inline.html",
+      "category": "layout",
+      "priority": "normal",
+      "comment": "There is empty space to the right. Why is this? Shouldn't the content fill out the  width of the box?",
+      "target": {
+        "selector": "#ctx-enabling-infrastructure > div.fcInlineBody",
+        "tag": "div",
+        "elementId": "",
+        "classes": "fcInlineBody",
+        "text": "How the report frames Gladstone\u2019s energy system before scoring the indicators. Today, Queensland is powered by 31% renewable energy.1 Current system planning, aligned with AEMO\u2019s Step Change scenario, projects that this share will rise to 88% by 2035 if only committed and anticipated generation and ",
+        "html": "<div class=\"fcInlineBody\"> <div class=\"fcScope\">How the report frames Gladstone\u2019s energy system before scoring the indicators.</div> <div class=\"fcBody\"><p>Today, Queensland is powered by 31% renewable energy.<sup class=\"refMark\"><a data-ref=\"c-enabling-infrastructure-1\" tabindex=\"0\" role=\"link\" title=\"Jump to reference 1\">1</a></sup> Current system planning, aligned with AEMO\u2019s Step Change scenario, projects that this share will rise to 88% by 2035 if only committed and anticipated generation and transmission projects proceed. This could increase to 96% if all actionable projects in the Step Change least-cost development pathway are delivered.</p><p>A more ambitious trajectory, aligned with AEMO\u2019s Green Energy Exports scenario, reflects the infrastructure needed to rapidly decarbonise existing manufacturing and establish new clean export industries. Under this scenario, Queensland would reach 95% renewables by 2035 based on committed and anticipated projects, rising to 99% with full delivery of all actionable projects in the Green Energy Exports least-cost development pathway.</p><p>These projections are drawn from the counterfactual and least-cost candidate development paths for ",
+        "ancestors": "div \u203a section.pillar \u203a div.pBody \u203a details.fcInline",
+        "rect": {
+          "x": 162,
+          "y": 679.8,
+          "w": 976.67,
+          "h": 4478.57
+        },
+        "styleHints": {
+          "display": "block",
+          "font-size": "16px",
+          "font-weight": "400",
+          "line-height": "25.6px",
+          "color": "rgb(16, 34, 46)",
+          "background-color": "rgb(255, 255, 255)",
+          "border-radius": "0px 0px 10px 10px",
+          "padding": "20px 18px 22px",
           "margin": "0px",
           "text-align": "start"
         }
