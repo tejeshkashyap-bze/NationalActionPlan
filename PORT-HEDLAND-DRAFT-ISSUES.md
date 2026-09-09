@@ -1,5 +1,22 @@
 # Port Hedland: the site against the September 2026 report
 
+## Fixed 9 September 2026: the grading scale was printing twice
+
+Eight of the twenty-four indicators carried their grading scale twice: once as
+the styled list in the first paragraph, which is the house format, and again
+straight after as five plain-text lines. The September refresh brought them in
+that way because the report prints the scale as loose paragraphs, and it went
+live.
+
+Affected: renewable generation, transmission, distribution, energy storage,
+hydrogen, water and wastewater, housing, industry decarbonisation plans.
+Thirty-five paragraphs removed. Each one was checked against the styled scale
+before deletion and every one was an exact restatement, so no assessment text
+was lost.
+
+Worth carrying into the next import: check that nothing after the first
+paragraph starts with a bare grading level.
+
 ## Where this stands
 
 **Resolved, 9 September 2026.** All 24 indicators were refreshed from the
