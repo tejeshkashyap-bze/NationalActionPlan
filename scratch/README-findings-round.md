@@ -10,6 +10,54 @@ inventory are in `report-content-gap-plan.md` (project docs).
 | `findings-band.html` | **B · Findings band.** Scores stay a clean scoreboard; findings collected in their own band below, figures full width. |
 | `findings-split.html` | **C · Split view.** Two columns — rows left, findings pinned right. Wide screens only; stacks below tablet. |
 
+## Corrected 9 September 2026
+
+The first cut of this round made one substantive mistake and carried three
+smaller ones. All are fixed here.
+
+**Section context was inside the findings.** Opening Gladstone's Enabling
+Infrastructure findings showed Table 3 and the demand-scenario figures. Those
+come from the top of section 1.1, before any indicator is scored: they are
+context for the Energy System indicators, not findings about them. Every
+report has this material, and it now has its own collapsed block that opens
+the theme, where findings close it. Same treatment for the Hunter's Figure 1
+and the Port Hedland map. Gladstone's Table 5 is out of both: the report puts
+it inside indicator 2.1.1, so it belongs to that indicator through the
+evidence-text marker, not to a theme-level block.
+
+**The label said "Findings".** The reports call these sections "Key findings
+and recommendations". The badge now does too.
+
+**Port Hedland's text had been reworded on the way in.** "East Pilbara" for
+"Eastern Pilbara"; "Commendable actions from some companies with Fortescue
+benefiting" for "Commendable actions from some companies are in evidence, with
+Fortescue benefiting"; "a key focus on iron ore exporters" for "a key focus for
+the future of iron ore exporters"; and three of the Social Acceptance
+recommendations rewritten as imperatives. One finding, on Mineral Resources'
+Wodgina Lithium Project, had been dropped. All four sections are re-imported
+verbatim from the docx.
+
+**The Hunter's numbered recommendations had been flattened into paragraphs.**
+The report numbers three recommendations and nests a lettered point under each.
+That structure is kept.
+
+Gladstone's and the Hunter's findings prose were checked paragraph by paragraph
+against the reports and were already verbatim. Nothing there changed.
+
+**No text preview on the summary line.** Both blocks show their tag and a count,
+nothing else.
+
+**References.** Markers are renumbered from 1 within each block, the way
+`references-<region>.js` already numbers them for the indicators, and each block
+carries its own reference list with the same look as the indicator pages. Every
+marker is placed explicitly by matching the text either side of it. Nothing is
+pattern-matched, because a citation and a decimal look the same. Port Hedland
+cites author-date, so those citations are lifted out of the sentence and become
+markers, as the evidence import does. `report` on each entry keeps the number
+the printed report used, for tracing back, and is not shown.
+
+---
+
 All three read the same data and render it the same way:
 
 - `findings-concept-data.js` — what a real `findings-<region>.js` would hold, for

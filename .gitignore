@@ -14,4 +14,4 @@ node_modules/
 *.xls
 
 # Commit messages prepared for pasting.
-commit-msg.txt
+commit-msg*.txt

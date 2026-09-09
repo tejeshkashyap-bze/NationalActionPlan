@@ -10,26 +10,81 @@
 window.FC = (function () {
   const esc = (s) => NAP.esc(s);
 
-  /* Citation markers. The reports print superscript numbers in the findings
-     text the same way they do in the evidence, and the data here still holds
-     them as plain digits, so this guesses where they are.
+  /* Citation markers. The text carries them exactly as the reports place
+     them, written as <sup class="refMark">1,2</sup> with this block's own
+     numbering. Everything else in the string is escaped; only that tag is
+     let through, so the data stays plain text with one known exception.
 
-     It is a DEMO ONLY, to show the treatment. The guess cannot tell a citation
-     from a decimal ("2035.101" and "5.6" look the same), so it deliberately
-     refuses to mark digits that follow a digit, and misses a few real markers
-     as a result. The actual import does what the references import already
-     did: write <sup class="refMark"> into the text at the point the report
-     put it, and resolve it against references-<region>.js. No guessing. */
-  function marks(text) {
-    return esc(text).replace(/([a-z%\)”"’])(\.?)(\d{1,3}(?:,\d{1,3})*)(?=[\s)]|$)/g,
-      (m, ch, dot, nums) => `${ch}${dot}<sup class="refMark">${nums}</sup>`);
+     Each number becomes a jump link to its entry in the list at the foot of
+     the block, but only when the block has a reference list and the numbers
+     resolve. Otherwise the marker renders as a plain superscript, which is
+     the same quiet failure the indicator pages use. */
+  function marks(text, refs, scope) {
+    let html = esc(text)
+      .replace(/&lt;sup class=&quot;refMark&quot;&gt;([\d,]+)&lt;\/sup&gt;/g,
+        (m, list) => `<sup class="refMark">${list}</sup>`);
+    if (!refs || !refs.length) return html;
+    const have = new Set(refs.map((r) => String(r.n)));
+    return html.replace(/<sup class="refMark">([\d,]+)<\/sup>/g, (m, list) => {
+      const nums = list.split(",");
+      if (!nums.every((n) => have.has(n))) return m;
+      return `<sup class="refMark">` + nums.map((n) =>
+        `<a data-ref="${esc(scope)}-${n}" tabindex="0" role="link" ` +
+        `title="Jump to reference ${n}">${n}</a>`).join(",") + `</sup>`;
+    });
   }
 
-  function bodyHTML(body) {
+  /* The sources behind one block, numbered 1 upward in the order a reader
+     meets them. `report` on each entry is the number the printed report used;
+     kept in the data for traceability and deliberately not shown. Link text
+     is the host, so a long address cannot break the line. */
+  function refsHTML(refs, scope) {
+    if (!refs || !refs.length) return "";
+    return `<div class="fcRefs"><div class="fcRefsHead">References</div>` +
+      `<ol class="refList">` + refs.map((r) =>
+        `<li class="refItem" id="ref-${esc(scope)}-${r.n}">${esc(r.cite)}` +
+        (r.url ? ` <a class="refLink" href="${esc(r.url)}" target="_blank" rel="noopener" ` +
+          `title="${esc(r.url)}">${esc(host(r.url))}</a>` : "") + `</li>`).join("") +
+      `</ol></div>`;
+  }
+
+  function host(url) {
+    try { return new URL(url).host.replace(/^www\./, ""); }
+    catch (e) { return url; }
+  }
+
+  /* Clicking a marker highlights its entry and scrolls to it. No hash: these
+     blocks sit inside <details>, and a #ref-… in the URL would fight that. */
+  function wireRefJumps(root) {
+    (root || document).querySelectorAll(".refMark a").forEach((a) => {
+      const go = () => {
+        const li = document.getElementById(`ref-${a.dataset.ref}`);
+        if (!li) return;
+        document.querySelectorAll(".refItem.isTarget").forEach((x) => x.classList.remove("isTarget"));
+        li.classList.add("isTarget");
+        li.scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+      a.addEventListener("click", go);
+      a.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+      });
+    });
+  }
+
+  function bodyHTML(body, refs, scope) {
+    const M = (t) => marks(t, refs, scope);
     return (body || []).map((b) => {
       if (b.h) return `<h4 class="fcSub">${esc(b.h)}</h4>`;
-      if (b.ul) return `<ul class="fcList">${b.ul.map((li) => `<li>${marks(li)}</li>`).join("")}</ul>`;
-      return `<p>${marks(b.p)}</p>`;
+      if (b.fig) return figureHTML(b.fig);
+      if (b.ul) return `<ul class="fcList">${b.ul.map((li) => `<li>${M(li)}</li>`).join("")}</ul>`;
+      /* The Hunter numbers its recommendations and nests a lettered point
+         under each. Flattening that into paragraphs lost the structure the
+         report gave it, so it is kept. */
+      if (b.ol) return `<ol class="fcOl">${b.ol.map((n) =>
+        `<li>${M(n.t)}${(n.sub || []).length
+          ? `<ol class="fcOlSub">${n.sub.map((s) => `<li>${M(s)}</li>`).join("")}</ol>` : ""}</li>`
+      ).join("")}</ol>`;
+      return `<p>${M(b.p)}</p>`;
     }).join("");
   }
 
@@ -59,11 +114,12 @@ window.FC = (function () {
     return (ids || []).map(figureHTML).join("");
   }
 
-  /* "4 findings · 3 recommendations", or the first sentence when the report
-     wrote prose. This is the line that has to earn the click. */
+  /* The first sentence of whatever the report opened with. This is the line
+     that has to earn the click, so it takes the lead-in paragraph when there
+     is one and only falls back to the first bullet when there isn't. */
   function teaser(block) {
-    const list = block.body.find((b) => b.ul);
-    const first = list ? list.ul[0] : ((block.body.find((b) => b.p) || {}).p || "");
+    const lead = block.body.find((b) => b.p || b.ul);
+    const first = !lead ? "" : (lead.p || lead.ul[0]);
     const stop = first.indexOf(". ");
     return stop > 40 ? first.slice(0, stop + 1) : first.slice(0, 180) + (first.length > 180 ? "…" : "");
   }
@@ -73,7 +129,10 @@ window.FC = (function () {
      there, rather than imposing one vocabulary on both. */
   function counts(block) {
     const bits = [];
-    const hasLists = block.body.some((b) => b.ul);
+    /* A context block is prose that happens to contain a list or two, so
+       counting its bullets the way a bulleted findings block is counted would
+       read as "4 points · 2 points". Count its paragraphs instead. */
+    const hasLists = block.body.some((b) => b.ul) && !block.pillar;
 
     if (hasLists) {
       block.body.forEach((b, i) => {
@@ -86,7 +145,20 @@ window.FC = (function () {
       if (paras) bits.push(`${paras} paragraph${paras > 1 ? "s" : ""}`);
     }
 
-    const figs = (block.figures || []).length;
+    /* Numbered recommendations count too. The Hunter writes prose and then
+       numbers three of them, so "3 paragraphs" alone undersells the block. */
+    block.body.forEach((b, i) => {
+      if (!b.ol) return;
+      const h = (block.body[i - 1] || {}).h;
+      bits.push(`${b.ol.length} ${h ? h.toLowerCase() : "point" + (b.ol.length > 1 ? "s" : "")}`);
+    });
+
+    const objs = block.body.filter((b) => b.fig)
+      .map((b) => (window.CONCEPT_FIGURES || {})[b.fig])
+      .filter(Boolean);
+    const tables = objs.filter((f) => f.kind === "table").length;
+    const figs = objs.length - tables;
+    if (tables) bits.push(`${tables} table${tables > 1 ? "s" : ""}`);
     if (figs) bits.push(`${figs} figure${figs > 1 ? "s" : ""}`);
     return bits.join(" · ");
   }
@@ -108,17 +180,21 @@ window.FC = (function () {
 
   function forRegion(key) {
     const r = (window.CONCEPT_FINDINGS.regions || {})[key];
-    if (!r) return { round: null, byGroup: {}, list: [] };
+    if (!r) return { round: null, byGroup: {}, list: [], byPillar: {}, contexts: [] };
     const byGroup = {};
     r.blocks.forEach((b) => { byGroup[anchorFor(b)] = b; });
-    return { round: r.round, byGroup, list: r.blocks };
+    const byPillar = {};
+    (r.contexts || []).forEach((c) => { byPillar[c.pillar] = c; });
+    return { round: r.round, byGroup, list: r.blocks, byPillar, contexts: r.contexts || [] };
   }
 
   function scopeHTML(block) {
     const covers = (block.covers || []).join(" · ");
+    if (!covers) return block.scope ? `<div class="fcScope">${esc(block.scope)}</div>` : "";
     return `<div class="fcScope"><strong>Covers</strong> ${esc(covers)}` +
       (block.scope ? ` — ${esc(block.scope)}` : "") + `</div>`;
   }
 
-  return { bodyHTML, figureHTML, figuresHTML, teaser, counts, forRegion, anchorFor, scopeHTML, marks };
+  return { bodyHTML, figureHTML, figuresHTML, teaser, counts, forRegion, anchorFor,
+           scopeHTML, marks, refsHTML, wireRefJumps };
 })();

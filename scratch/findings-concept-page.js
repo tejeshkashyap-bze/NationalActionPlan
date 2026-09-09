@@ -53,6 +53,7 @@
       (MODE === "band" ? bandHTML(F) : "");
 
     renderThemes(scores, F);
+    FC.wireRefJumps(host);          // covers the band, which sits outside #themes
     wire();
   }
 
@@ -85,19 +86,19 @@
 
         const block = F.byGroup[g.groupId];
         const name = `<div class="grpName">${NAP.esc(g.groupTitle)}` +
-          (block && MODE === "band" ? ` <a class="fcJump" href="#fc-${NAP.esc(g.groupId)}">Findings ↓</a>` : "") +
+          (block && MODE === "band" ? ` <a class="fcJump" href="#fc-${NAP.esc(g.groupId)}">Key findings ↓</a>` : "") +
           `</div>`;
 
         if (MODE === "split" && block) {
           return `<div class="grp grpSplit">
             <div class="grpMain">${name}${rows}</div>
             <aside class="fcRail" id="fc-${NAP.esc(g.groupId)}">
-              <div class="fcRailHead"><span class="fcTag">Findings</span>
+              <div class="fcRailHead"><span class="fcTag">Key findings and recommendations</span>
                 <span class="fcCount">${NAP.esc(FC.counts(block))}</span></div>
               <div class="fcRailBody">
                 ${FC.scopeHTML(block)}
-                <div class="fcBody">${FC.bodyHTML(block.body)}</div>
-                ${FC.figuresHTML(block.figures)}
+                <div class="fcBody">${FC.bodyHTML(block.body, block.refs, "g-" + g.groupId)}</div>
+                ${FC.refsHTML(block.refs, "g-" + g.groupId)}
               </div>
             </aside>
           </div>`;
@@ -106,14 +107,13 @@
         const inline = (MODE === "inline" && block) ? `
           <details class="fcInline" id="fc-${NAP.esc(g.groupId)}">
             <summary>
-              <span class="fcTag">Findings</span>
-              <span class="fcTeaser">${FC.marks(FC.teaser(block))}</span>
+              <span class="fcTag">Key findings and recommendations</span>
               <span class="fcCount">${NAP.esc(FC.counts(block))}</span>
             </summary>
             <div class="fcInlineBody">
               ${FC.scopeHTML(block)}
-              <div class="fcBody">${FC.bodyHTML(block.body)}</div>
-              ${FC.figuresHTML(block.figures)}
+              <div class="fcBody">${FC.bodyHTML(block.body, block.refs, "g-" + g.groupId)}</div>
+              ${FC.refsHTML(block.refs, "g-" + g.groupId)}
             </div>
           </details>` : "";
 
@@ -122,6 +122,25 @@
 
       if (!groups) return "";
 
+      /* The report sets the scene for a theme before it scores anything in
+         it: the scenario it benchmarks against, the region's demand, and the
+         section-opening tables and figures. That is context, not findings, so
+         it opens the theme rather than closing it. Collapsed by default: the
+         page still reads as a score sheet at a glance. */
+      const ctx = F.byPillar[p.pillarId];
+      const context = ctx ? `
+        <details class="fcInline fcContext" id="ctx-${NAP.esc(p.pillarId)}">
+          <summary>
+            <span class="fcTag fcTagCtx">Context</span>
+            <span class="fcCount">${NAP.esc(FC.counts(ctx))}</span>
+          </summary>
+          <div class="fcInlineBody">
+            ${FC.scopeHTML(ctx)}
+            <div class="fcBody">${FC.bodyHTML(ctx.body, ctx.refs, "c-" + p.pillarId)}</div>
+            ${FC.refsHTML(ctx.refs, "c-" + p.pillarId)}
+          </div>
+        </details>` : "";
+
       return `<section class="pillar">
         <button class="pBtn" type="button" aria-expanded="${isOpen}">
           <span class="pIdx">${String(pi + 1).padStart(2, "0")}</span>
@@ -129,7 +148,7 @@
           <span class="pCount">${p.groups.length} groups · ${s.total} indicators${s.n ? ` · <strong>${s.n} scored</strong>` : ""}</span>
           <span class="pCar"></span>
         </button>
-        <div class="pBody${isOpen ? " open" : ""}">${groups}</div>
+        <div class="pBody${isOpen ? " open" : ""}">${context}${groups}</div>
       </section>`;
     }).join("");
 
@@ -163,8 +182,8 @@
             <div class="fcCount">${NAP.esc(FC.counts(b))}</div>
           </header>
           ${FC.scopeHTML(b)}
-          <div class="fcBody">${FC.bodyHTML(b.body)}</div>
-          ${FC.figuresHTML(b.figures)}
+          <div class="fcBody">${FC.bodyHTML(b.body, b.refs, "b-" + FC.anchorFor(b))}</div>
+          ${FC.refsHTML(b.refs, "b-" + FC.anchorFor(b))}
         </article>`).join("")}</div>
     </div>`;
   }

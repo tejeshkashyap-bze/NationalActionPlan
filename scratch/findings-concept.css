@@ -76,3 +76,57 @@
   text-transform: uppercase; color: #fff; background: var(--blue);
   border-radius: 4px; padding: 2px 7px;
 }
+
+/* ---- section context --------------------------------------------------- */
+
+/* Context is not findings. It opens a theme where findings close it, so it
+   gets an outlined tag rather than the solid one, and a quieter ground. */
+.fcTagCtx {
+  color: var(--blue-deep); background: #fff; white-space: nowrap;
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+
+.fcContext { background: #fff; }
+.fcContext > summary { background: #fff; }
+
+/* ---- numbered recommendations ------------------------------------------ */
+
+/* The Hunter numbers its recommendations and nests a lettered point under
+   each one. Kept as a real list so the structure survives. */
+.fcOl { margin: 14px 0; padding-left: 22px; }
+.fcOl > li {
+  font-size: 14.5px; line-height: 1.65; color: var(--ink);
+  font-weight: 600; margin: 0 0 10px;
+}
+.fcOlSub { list-style: lower-alpha; margin: 8px 0 16px; padding-left: 20px; }
+.fcOlSub > li {
+  font-weight: 400; color: var(--ink-2); margin: 0 0 8px; max-width: 68ch;
+}
+
+/* ---- references ---------------------------------------------------------- */
+
+/* Same shape as the reference list on an indicator page: numbered from 1 in
+   the order a reader meets them, host name as the link text so a long address
+   cannot break the line. */
+.fcRefs {
+  margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line);
+}
+.fcRefsHead {
+  font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 10px;
+}
+.fcRefs .refList { margin: 0; padding-left: 20px; }
+.fcRefs .refItem {
+  font-size: 12.5px; line-height: 1.6; color: var(--ink-2);
+  margin: 0 0 7px; max-width: 84ch; scroll-margin-top: 90px;
+}
+.fcRefs .refItem.isTarget {
+  background: #fff6dd; border-radius: 4px;
+  box-shadow: 0 0 0 4px #fff6dd;
+}
+.fcRefs .refLink { color: var(--blue); text-decoration: none; }
+.fcRefs .refLink:hover { text-decoration: underline; }
+
+.fcBody .refMark { font-size: 10.5px; font-weight: 700; color: var(--blue); }
+.fcBody .refMark a { color: inherit; cursor: pointer; text-decoration: none; }
+.fcBody .refMark a:hover { text-decoration: underline; }
