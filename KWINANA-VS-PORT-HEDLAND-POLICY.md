@@ -618,9 +618,10 @@ handles these.
 - **Report dating.** Port Hedland's evidence refers to the Kwinana report as
   both "(May 2026)" in state R&D and "(April 2026)" in state procurement, and
   the project's own metadata dates the Kwinana round August 2026. Three dates
-  for one report. Also both documents call the Hunter report May 2025 and
-  Gladstone October 2025, where the project metadata says April 2025 and
-  September 2025. Pre-existing, but it will need settling before publication.
+  for one report, still unsettled. The Hunter and Gladstone halves of this are
+  now resolved: the site dates them May 2025 and September 2025, matching the
+  reports. Only the Kwinana report's own dating still needs settling before
+  publication.
 
 ---
 

@@ -164,7 +164,7 @@ waiting on my **Clear** in the overlay, which is the reviewer's call.
 
 Data as at August 2026: 50 indicators, 4 assessed regions of 16 — Port Hedland
 24/50 and Kwinana 24/50 (both August 2026), Gladstone 20/50 (September 2025),
-Hunter Valley 19/50 (April 2025). 87 scores in total. 24 distinct indicators
+Hunter Valley 19/50 (May 2025). 87 scores in total. 24 distinct indicators
 are scored somewhere; 26 have never been scored, and none of those 26 has a
 `learn-data.js` entry either. Every scored indicator has matching evidence,
 every evidence score agrees with `scores.js`, and there are no orphan
@@ -197,15 +197,15 @@ indicator ids.
    not taken up. Kwinana and Port Hedland would need sourcing either way.
    Dropping a real `<key>.jpg` into `regions/` replaces a placeholder with no
    code change, because `.jpg` is probed before `.png`.
-8. **Hunter Valley's dates disagree.** `scores.js` puts the round at April
-   2025; every evidence entry in `evidence-hunter-valley.js` is dated March
-   2026, which is the import date rather than the assessment date. Both the
-   Kwinana and Port Hedland reports call the Hunter report May 2025, so there
-   are three candidate dates and the right one is a content call for me.
-   Gladstone had the same fault and is settled: September 2025 is the release
-   date, and `evidence-gladstone.js` now carries it. `criterion.html`
-   deliberately shows the round date in the aside and the evidence dates only
-   under Previous rounds, so the two never appear side by side.
+8. **Round dates are settled.** Gladstone and Hunter Valley both used to
+   carry the import date, March 2026, on every evidence entry while `scores.js`
+   said something else. Tejesh has confirmed the release dates: Gladstone
+   September 2025, Hunter Valley May 2025. Both files and `scores.js` now
+   agree, and all four regions match. `criterion.html` still shows the round
+   date in the aside and the evidence dates only under Previous rounds, so if
+   they ever drift again the difference stays visible. Now that they agree,
+   printing the date next to the score on `criterion.html` is available if
+   wanted; that is a design call, not a correction.
 9. **The grading scale exists twice** — as signed-off wording in the first
    paragraph of every evidence entry, and as structured rows in
    `learn-data.js` (`scoringDescriptions`). `criterion.html` prefers the

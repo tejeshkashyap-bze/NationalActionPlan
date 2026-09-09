@@ -7,7 +7,7 @@
 const SCORES = {
   "hunter-valley": [
     {
-      "date": "April 2025",
+      "date": "May 2025",
       "scores": {
         "renewable-energy-generation": 3,
         "transmission-network": 2,

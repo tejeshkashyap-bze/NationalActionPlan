@@ -11,7 +11,7 @@ window.CITY_EVIDENCE = {
 
   "renewable-energy-generation": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Pipeline of renewable energy projects inadequate to meet more than 50% of REZ needs by 2035</li><li><strong>2</strong> – Pipeline of renewable energy projects adequate in line with 2035 Green Energy Exports targets, more than 75% without planning approval</li><li><strong>3</strong> – Pipeline of renewable energy projects adequate in line with 2035 Green Energy Exports targets, more than 50% without planning approval</li><li><strong>4</strong> – Pipeline of renewable energy projects adequate in line with 2035 Green Energy Exports targets, more than 25% without planning approval</li><li><strong>5</strong> – Pipeline of renewable energy projects adequate in line with 2035 Green Energy Exports targets, all projects approved to deliver REZ, at least 15% already under operation</li></ul>",
@@ -24,7 +24,7 @@ window.CITY_EVIDENCE = {
 
   "transmission-network": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 2,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Transmission network tracking to meet ~25%-50% of demand to electrify existing industry by 2035</li><li><strong>2</strong> – Transmission network tracking to meet ~more than 50% of demand to electrify existing industry by 2035</li><li><strong>3</strong> – Transmission network tracking to meet electrification of existing industry and up to 20% additional demand by 2035</li><li><strong>4</strong> – Transmission network projects on track to meet 100% electrification of existing industry and between 20-50% of additional demand by 2035</li><li><strong>5</strong> – Transmission network on track to meet 100% transmission needs of existing and new entrants by 2035</li></ul>",
@@ -38,7 +38,7 @@ window.CITY_EVIDENCE = {
 
   "distribution-network": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 2,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – No plans for electrification including at the household level</li><li><strong>2</strong> – Electrification planning for modest consumer energy resources (CER) uptake, not industry electrification</li><li><strong>3</strong> – Electrification planning for high uptake of CER, not industry electrification</li><li><strong>4</strong> – Electrification planning for 100% electrification of CER, and modest amount of industry electrification</li><li><strong>5</strong> – Electrification planning for 100% electrification of CER, and high amount of industry electrification and capacity for new entrants</li></ul>",
@@ -52,7 +52,7 @@ window.CITY_EVIDENCE = {
 
   "energy-storage": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 2,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Pipeline of energy storage projects is less than 25% 2035 Green Energy Exports targets, more than 75% without planning approval</li><li><strong>2</strong> – Pipeline of energy storage projects is less than 50% of 2035 Green Energy Exports targets, more than 50% without planning approval</li><li><strong>3</strong> – Pipeline of energy storage projects adequate in line with 2035 Green Energy Exports targets, more than 25% without planning approval</li><li><strong>4</strong> – Pipeline of energy storage projects adequate in line with 2035 Green Energy Exports targets, all projects approved to deliver REZ, at least 15% already under operation</li><li><strong>5</strong> – Pipeline of energy storage projects adequate, in line with 2035 Green Energy Exports targets, more than 30% already under operation</li></ul>",
@@ -66,7 +66,7 @@ window.CITY_EVIDENCE = {
 
   "hydrogen-network": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 1,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Underinvestment/enabling infrastructure, likely to produce a small amount of hydrogen by 2035</li><li><strong>2</strong> – Underinvestment/enabling infrastructure, likely to produce a modest amount of hydrogen by 2035</li><li><strong>3</strong> – Investment/enabling infrastructure in place to produce a high amount of green hydrogen by 2035 according to Step Change</li><li><strong>4</strong> – Hydrogen projects online by 2030-35 and producing 50% of Green Energy Exports</li><li><strong>5</strong> – Hydrogen projects online by 2030-35 and producing 100% of Green Energy Exports</li></ul>",
@@ -78,7 +78,7 @@ window.CITY_EVIDENCE = {
 
   "industry-decarbonisation-plans": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 2,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Most companies plans have plans with no targets and or not funded (Limited Plan/Insufficient Targets)</li><li><strong>2</strong> – Most companies have plans with targets, but only some are aligned to 75% emissions reduction by 2035 and not all commitments are funded (Basic Plans/Uncertain Implementation Pathways)</li><li><strong>3</strong> – Most companies have plans with targets, and most are aligned to 75% emissions reduction by 2035 and are funded (Intermediate Plans/Developing Momentum)</li><li><strong>4</strong> – All major companies have plans with targets aligned with 75% emissions reduction by 2035, with commitments funded but no internal performance initiatives (Comprehensive Plans/Aligned with Regional Goals)</li><li><strong>5</strong> – All major companies have plans aligned with 75% emissions reduction by 2035, are fully funded and have internal performance initiatives (Leading Practice/Exemplary Industry Leadership)</li></ul>",
@@ -93,7 +93,7 @@ window.CITY_EVIDENCE = {
 
   "federal-emissions-commitment": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal commitment (Severe Deficiency)</li><li><strong>2</strong> – Basic commitment (Moderate Deficiency)</li><li><strong>3</strong> – Moderate commitment (Developing)</li><li><strong>4</strong> – Strong commitment (Effective)</li><li><strong>5</strong> – Exemplary commitment (Leading Practice)</li></ul>",
@@ -109,7 +109,7 @@ window.CITY_EVIDENCE = {
 
   "federal-skills-training": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -123,7 +123,7 @@ window.CITY_EVIDENCE = {
 
   "federal-approvals": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -139,7 +139,7 @@ window.CITY_EVIDENCE = {
 
   "federal-investment-framework": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -155,7 +155,7 @@ window.CITY_EVIDENCE = {
 
   "federal-rd": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 4,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -169,7 +169,7 @@ window.CITY_EVIDENCE = {
 
   "federal-procurement": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -182,7 +182,7 @@ window.CITY_EVIDENCE = {
 
   "state-emissions-commitment": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal commitment (Severe Deficiency)</li><li><strong>2</strong> – Basic commitment (Moderate Deficiency)</li><li><strong>3</strong> – Moderate commitment (Developing)</li><li><strong>4</strong> – Strong commitment (Effective)</li><li><strong>5</strong> – Exemplary commitment (Leading Practice)</li></ul>",
@@ -196,7 +196,7 @@ window.CITY_EVIDENCE = {
 
   "state-skills-training": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 4,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -209,7 +209,7 @@ window.CITY_EVIDENCE = {
 
   "state-approvals": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -223,7 +223,7 @@ window.CITY_EVIDENCE = {
 
   "state-investment-framework": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -239,7 +239,7 @@ window.CITY_EVIDENCE = {
 
   "state-rd": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -251,7 +251,7 @@ window.CITY_EVIDENCE = {
 
   "state-procurement": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 3,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -265,7 +265,7 @@ window.CITY_EVIDENCE = {
 
   "lga-decarbonisation-plans": [
     {
-      date: "March 2026",
+      date: "May 2025",
       score: 2,
       paragraphs: [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal Plan (Severe Deficiency)</li><li><strong>2</strong> – Basic Plan (Moderate Deficiency)</li><li><strong>3</strong> – Moderate Plan (Developing)</li><li><strong>4</strong> – Strong Plan (Effective)</li><li><strong>5</strong> – Exemplary Plan (Leading Practice)</li></ul>",
