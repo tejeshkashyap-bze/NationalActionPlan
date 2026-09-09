@@ -2196,3 +2196,169 @@ html[data-ramp="traffic"] {
   color: var(--blue);
   word-break: break-word;
 }
+
+
+/* ============================================================================
+   THEME-LEVEL REPORT CONTENT
+   Two collapsed blocks on a region page, both fed by findings-<region>.js:
+   the context a report sets out before scoring a theme, and the key findings
+   and recommendations it closes the theme with. Everything here is prefixed
+   fc-, and the tables reuse .tableWrap / .dataTable above.
+   ========================================================================= */
+
+/* ---- the collapsed block ------------------------------------------------ */
+
+.fcBlock {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--wash);
+  margin: 14px 0 4px;
+}
+
+.fcBlock > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: var(--r);
+}
+.fcBlock > summary::-webkit-details-marker { display: none; }
+.fcBlock > summary:hover { background: #eaf2f8; }
+
+/* The summary holds only its tag, so the chevron is what keeps the row's
+   right edge. */
+.fcBlock > summary::after {
+  content: "";
+  flex: none;
+  margin-left: auto;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--ink-3);
+  border-bottom: 2px solid var(--ink-3);
+  transform: rotate(45deg) translate(-2px, -2px);
+}
+.fcBlock[open] > summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+.fcBlock[open] > summary {
+  border-bottom: 1px solid var(--line);
+  border-radius: var(--r) var(--r) 0 0;
+}
+
+.fcBlockBody {
+  padding: 20px 18px 22px;
+  background: var(--card);
+  border-radius: 0 0 var(--r) var(--r);
+}
+
+/* Context opens a theme where findings close it, so it gets an outlined tag
+   rather than the solid one. */
+.fcTag {
+  display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: #fff; background: var(--blue);
+  border-radius: 4px; padding: 2px 7px;
+}
+.fcTagCtx {
+  color: var(--blue-deep); background: #fff; white-space: nowrap;
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+.fcContext, .fcContext > summary { background: #fff; }
+
+/* ---- the findings body ------------------------------------------------ */
+
+/* Review comment #6: the prose used to stop at a 74ch reading measure, which
+   left a band of empty card to its right and made it look narrower than the
+   tables and figures beside it, which run the full width. It now fills the
+   block. The block is already inset inside the accordion, so the line is
+   shorter than the page width, but on a wide monitor it is longer than the
+   68ch the indicator pages use for evidence prose. */
+.fcBody { max-width: none; }
+.fcBody p { font-size: 14.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.fcBody p:last-child { margin-bottom: 0; }
+
+.fcSub {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--blue-deep); margin: 22px 0 10px;
+}
+.fcSub:first-child { margin-top: 0; }
+
+.fcList { margin: 0 0 14px; padding-left: 20px; }
+.fcList li { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); margin-bottom: 8px; }
+
+/* Where the report's section actually reached. Gladstone wrote findings for a
+   category, not a theme; Port Hedland wrote them for a whole theme. The site
+   says so rather than quietly reframing either. */
+.fcScope {
+  font-size: 12.5px; line-height: 1.55; color: var(--ink-3);
+  background: var(--wash); border-left: 3px solid var(--line);
+  padding: 10px 14px; border-radius: 0 var(--r) var(--r) 0; margin: 0 0 18px;
+}
+.fcScope strong { color: var(--ink-2); font-weight: 700; }
+
+/* ---- figures ----------------------------------------------------------- */
+
+.fcFig { margin: 22px 0; }
+.fcFig:first-child { margin-top: 0; }
+
+.fcCap {
+  font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 10px;
+  line-height: 1.4;
+}
+.fcNum {
+  display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--blue-deep); background: var(--wash);
+  border-radius: 4px; padding: 2px 7px; margin-right: 8px;
+}
+
+.fcImg {
+  display: block; width: 100%; height: auto;
+  border: 1px solid var(--line); border-radius: var(--r); background: #fff;
+}
+
+.fcNote {
+  font-size: 12.5px; line-height: 1.55; color: var(--ink-3);
+  margin: 10px 0 0;
+}
+
+/* the site already ships .tableWrap / .dataTable — figures reuse them */
+
+/* ---- numbered recommendations ------------------------------------------ */
+
+/* The Hunter numbers its recommendations and nests a lettered point under
+   each one. Kept as a real list so the structure survives. */
+.fcOl { margin: 14px 0; padding-left: 22px; }
+.fcOl > li {
+  font-size: 14.5px; line-height: 1.65; color: var(--ink);
+  font-weight: 600; margin: 0 0 10px;
+}
+.fcOlSub { list-style: lower-alpha; margin: 8px 0 16px; padding-left: 20px; }
+.fcOlSub > li {
+  font-weight: 400; color: var(--ink-2); margin: 0 0 8px;
+}
+
+/* ---- references ---------------------------------------------------------- */
+
+/* Same shape as the reference list on an indicator page: numbered from 1 in
+   the order a reader meets them, host name as the link text so a long address
+   cannot break the line. */
+.fcRefs {
+  margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line);
+}
+.fcRefsHead {
+  font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 10px;
+}
+.fcRefs .refList { margin: 0; padding-left: 20px; }
+.fcRefs .refItem {
+  font-size: 12.5px; line-height: 1.6; color: var(--ink-2);
+  margin: 0 0 7px; scroll-margin-top: 90px;
+}
+.fcRefs .refItem.isTarget {
+  background: #fff6dd; border-radius: 4px;
+  box-shadow: 0 0 0 4px #fff6dd;
+}
+.fcRefs .refLink { color: var(--blue); text-decoration: none; }
+.fcRefs .refLink:hover { text-decoration: underline; }
+
+.fcBody .refMark { font-size: 10.5px; font-weight: 700; color: var(--blue); }
+.fcBody .refMark a { color: inherit; cursor: pointer; text-decoration: none; }
+.fcBody .refMark a:hover { text-decoration: underline; }

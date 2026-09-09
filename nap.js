@@ -253,6 +253,144 @@ const NAP = (function () {
       "help us document it");
   }
 
+  /* ---------- theme-level report content ---------- */
+
+  /* The reports carry two things at theme level that the indicator rows do
+     not: the context a theme opens with, and the key findings and
+     recommendations it closes with. Both live in findings-<region>.js, which
+     is optional in exactly the way references-<region>.js is. These helpers
+     turn one block into HTML; city.html decides where it goes.
+
+     The text is plain, escaped like everything else, with one exception:
+     <sup class="refMark">n</sup> is let through, because the reports place
+     citations inside sentences and the marker has to stay where they put it. */
+
+  function fMarks(text, refs, scope) {
+    let html = esc(text).replace(
+      /&lt;sup class=&quot;refMark&quot;&gt;([\d,]+)&lt;\/sup&gt;/g,
+      (m, list) => `<sup class="refMark">${list}</sup>`);
+    if (!refs || !refs.length) return html;
+    const have = new Set(refs.map(r => String(r.n)));
+    return html.replace(/<sup class="refMark">([\d,]+)<\/sup>/g, (m, list) => {
+      const nums = list.split(",");
+      if (!nums.every(n => have.has(n))) return m;   // same quiet failure as the evidence
+      return `<sup class="refMark">` + nums.map(n =>
+        `<a data-fref="${esc(scope)}-${n}" tabindex="0" role="link" ` +
+        `title="Jump to reference ${n}">${n}</a>`).join(",") + `</sup>`;
+    });
+  }
+
+  // A table or figure at the point the report placed it. A missing entry
+  // renders as nothing rather than a broken box, so a half-finished import
+  // is invisible rather than embarrassing.
+  function fFigure(id, figures) {
+    const f = (figures || {})[id];
+    if (!f) return "";
+
+    const cap = `<figcaption class="fcCap"><span class="fcNum">${esc(f.number)}</span> ` +
+      `${esc(f.title)}</figcaption>`;
+
+    if (f.kind === "table") {
+      return `<figure class="fcFig">${cap}` +
+        `<div class="tableWrap"><table class="dataTable">` +
+          `<thead><tr>${f.columns.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead>` +
+          `<tbody>${f.rows.map(r =>
+            `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody>` +
+        `</table></div>` +
+        (f.note ? `<p class="fcNote">${esc(f.note)}</p>` : "") +
+      `</figure>`;
+    }
+
+    return `<figure class="fcFig">${cap}` +
+      `<img class="fcImg" src="${esc(f.src)}" alt="${esc(f.alt)}" loading="lazy" />` +
+      (f.summary ? `<p class="fcNote">${esc(f.summary)}</p>` : "") +
+    `</figure>`;
+  }
+
+  function fBody(body, refs, scope, figures) {
+    const M = t => fMarks(t, refs, scope);
+    return (body || []).map(b => {
+      if (b.h)   return `<h4 class="fcSub">${esc(b.h)}</h4>`;
+      if (b.fig) return fFigure(b.fig, figures);
+      if (b.ul)  return `<ul class="fcList">${b.ul.map(li => `<li>${M(li)}</li>`).join("")}</ul>`;
+      // The Hunter numbers its recommendations and nests a lettered point
+      // under each. That structure is the report's, so it is kept.
+      if (b.ol)  return `<ol class="fcOl">${b.ol.map(n =>
+        `<li>${M(n.t)}${(n.sub || []).length
+          ? `<ol class="fcOlSub">${n.sub.map(s => `<li>${M(s)}</li>`).join("")}</ol>` : ""}</li>`
+      ).join("")}</ol>`;
+      return `<p>${M(b.p)}</p>`;
+    }).join("");
+  }
+
+  // The categories a block covers, named rather than reworded into one. A
+  // context block covers a whole theme, so it carries a plain note instead.
+  function fScope(block) {
+    const covers = (block.covers || []).join(" · ");
+    if (!covers) return block.scope ? `<div class="fcScope">${esc(block.scope)}</div>` : "";
+    return `<div class="fcScope"><strong>Covers</strong> ${esc(covers)}` +
+      (block.scope ? ` — ${esc(block.scope)}` : "") + `</div>`;
+  }
+
+  // Numbered from 1 in the order a reader meets them, as on an indicator
+  // page. Link text is the host so a long address cannot break the line.
+  function fRefs(refs, scope) {
+    if (!refs || !refs.length) return "";
+    return `<div class="fcRefs"><div class="fcRefsHead">References</div><ol class="refList">` +
+      refs.map(r =>
+        `<li class="refItem" id="fref-${esc(scope)}-${r.n}">${esc(r.cite)}` +
+        (r.url ? ` <a class="refLink" href="${esc(r.url)}" target="_blank" rel="noopener"` +
+          ` title="${esc(r.url)}">${esc(fHost(r.url))}</a>` : "") + `</li>`).join("") +
+      `</ol></div>`;
+  }
+
+  function fHost(url) {
+    try { return new URL(url).host.replace(/^www\./, ""); }
+    catch (e) { return url; }
+  }
+
+  // Clicking a marker highlights its entry and scrolls to it. No hash: these
+  // blocks sit inside <details>, and a #ref-… in the URL would fight that.
+  function fWireRefs(root) {
+    (root || document).querySelectorAll(".refMark a[data-fref]").forEach(a => {
+      const go = () => {
+        const li = document.getElementById(`fref-${a.dataset.fref}`);
+        if (!li) return;
+        document.querySelectorAll(".refItem.isTarget").forEach(x => x.classList.remove("isTarget"));
+        li.classList.add("isTarget");
+        li.scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+      a.addEventListener("click", go);
+      a.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+      });
+    });
+  }
+
+  // Where a findings block lands. It names the categories the report's
+  // section covered; where that is more than one — Gladstone wrote one set
+  // across federal, state and local policy, Port Hedland one across the whole
+  // Enabling Infrastructure theme — it is anchored to the LAST of them, so it
+  // sits after every category it draws on rather than above half of them.
+  function fAnchor(block) {
+    let last = null;
+    CSC.forEach(p => p.groups.forEach(g => {
+      if ((block.covers || []).includes(g.groupTitle)) last = g.groupId;
+    }));
+    return last || block.group;
+  }
+
+  // Everything city.html needs for one region, or empty shapes when the
+  // region has no findings file or the reader has selected another round.
+  function findingsFor(data, roundDate) {
+    const empty = { byPillar: {}, byGroup: {}, figures: {} };
+    if (!data || !data.round || data.round !== roundDate) return empty;
+    const byPillar = {}, byGroup = {};
+    (data.contexts || []).forEach(c => { byPillar[c.pillar] = c; });
+    (data.blocks || []).forEach(b => { byGroup[fAnchor(b)] = b; });
+    return { byPillar, byGroup, figures: data.figures || {} };
+  }
+
   /* ---------- shared marks ---------- */
 
   // A score chip. `v` may be undefined for an unscored indicator.
@@ -278,6 +416,7 @@ const NAP = (function () {
     hasMethod,
     coverage, mean, themeSummary,
     shell, crumbs, sBox, legend,
+    fBody, fFigure, fScope, fRefs, fWireRefs, fAnchor, findingsFor,
     helpCallout, undevelopedCallout, noMethodCallout, regionsScoring,
     V3_NOTE,
   };

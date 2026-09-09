@@ -30,6 +30,8 @@ client-side:
 | `scores.js` | Per-region scores, by round |
 | `learn-data.js`, `evidence-*.js` | Methodology and evidence content (large) |
 | `references-*.js` | One list of sources per indicator, per assessed region. Pairs with the citation markers in the evidence text — see *Citations and references* |
+| `findings-*.js` | What a report says at theme level, per assessed region: the context it sets out before scoring a theme, and the key findings and recommendations it closes the theme with. Optional, like `references-*.js` — see *Theme-level report content* |
+| `figures/` | Section-opening figures and maps lifted from the reports, referenced by `findings-*.js` |
 
 The design came from `scratch/nap-concept-a-report.html` and was folded into
 `styles.css` in August 2026. That concept file is the reference for how the
@@ -125,6 +127,55 @@ so a half-finished import degrades quietly rather than rendering a dead link.
 One thing to watch: `editor.html` writes evidence paragraphs back through
 Quill. An entry edited there could lose its markers, and nothing checks for
 that yet.
+
+
+## Theme-level report content
+
+The reports are organised in three levels and the site is organised in two.
+Indicator evidence has always had a home; the middle level, the theme, did not
+until September 2026.
+
+Each report holds **two different things** at theme level and they must not be
+conflated, which is the mistake the first import made:
+
+- **Context** is what the report sets out at the top of a theme, before it
+  scores anything: the scenario it benchmarks against, the region's demand, and
+  the section-opening tables and figures. It **opens** the theme on
+  `city.html`.
+- **Key findings and recommendations** is the section the report closes a theme
+  with. It **closes** the theme, under the rows of the last category it covers.
+
+Both live in `findings-<region>.js`, which assigns `window.CITY_FINDINGS` and
+is loaded on demand by `city.html`, exactly the way `references-<region>.js` is
+loaded by `criterion.html`. A region without one draws as it always has, and
+the 404 in the console is expected rather than a fault.
+
+- `contexts` is keyed by `pillarId` from `data.js`; `blocks` name the
+  `groupTitle`s the report's section actually covered. A block covering several
+  categories is anchored to the **last** of them, so it lands after every
+  category it draws on rather than above half of them. Never reword a heading
+  to fit the site: Gladstone wrote findings for a category and Port Hedland for
+  a whole theme, and the difference is real.
+- `body` carries the report's own structure: `{ p }`, `{ ul }`, `{ ol }` with
+  nested points, `{ h }`, and `{ fig }` for a table or figure at the point the
+  report placed it. Prose reports stay prose, bullet reports stay bullets.
+- `round` must match the round date in `scores.js`. The blocks show only while
+  that round is selected, so an earlier round never gets this round's
+  conclusions.
+- Citations follow the same rule as the evidence: markers are numbered from 1
+  within the block and written in as `<sup class="refMark">n</sup>` at the point
+  the report puts them. **Place them explicitly.** Pattern-matching cannot work
+  here, because a citation and a decimal are indistinguishable: "2035.101" and
+  "5.6" look the same. Port Hedland cites author-date, so those citations are
+  lifted out of the sentence into markers.
+- A table the report prints **inside an indicator** does not belong here. It
+  belongs to that indicator, and the mechanism for that is not built yet.
+
+`NAP.fBody`, `NAP.fScope`, `NAP.fRefs`, `NAP.fWireRefs` and `NAP.findingsFor`
+in `nap.js` do the rendering; the styles are the `fc*` block at the foot of
+`styles.css`. The three layout concepts this came from are in `scratch/`, with
+`scratch/README-findings-round.md` recording what was tried and what was wrong
+with the first cut.
 
 ## The review loop
 

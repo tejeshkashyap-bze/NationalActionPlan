@@ -569,7 +569,7 @@ window.CONCEPT_FINDINGS = {
       ]
     },
     "hunter-valley": {
-      "round": "April 2025",
+      "round": "May 2025",
       "blocks": [
         {
           "group": "energy-system",

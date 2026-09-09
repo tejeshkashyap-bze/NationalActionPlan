@@ -1,5 +1,12 @@
 # Findings round — three concepts
 
+> **Built. Concept A shipped on 9 September 2026.** The findings and context
+> blocks are on `city.html` for real, fed by `findings-<region>.js`, with the
+> renderer in `nap.js` and the styles at the foot of `styles.css`. See
+> *Theme-level report content* in `CLAUDE.md`. These three files stay as the
+> record of what was tried: B and C were not chosen, and the notes below on
+> what the first cut got wrong are worth keeping.
+
 Concepts for bringing the reports' **Key findings and recommendations**, and the
 section tables, charts and maps, into the region page. Background and the full
 inventory are in `report-content-gap-plan.md` (project docs).
@@ -43,18 +50,6 @@ That structure is kept.
 
 Gladstone's and the Hunter's findings prose were checked paragraph by paragraph
 against the reports and were already verbatim. Nothing there changed.
-
-**No text preview on the summary line.** Both blocks show their tag and a count,
-nothing else.
-
-**References.** Markers are renumbered from 1 within each block, the way
-`references-<region>.js` already numbers them for the indicators, and each block
-carries its own reference list with the same look as the indicator pages. Every
-marker is placed explicitly by matching the text either side of it. Nothing is
-pattern-matched, because a citation and a decimal look the same. Port Hedland
-cites author-date, so those citations are lifted out of the sentence and become
-markers, as the evidence import does. `report` on each entry keeps the number
-the printed report used, for tracing back, and is not shown.
 
 ---
 

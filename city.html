@@ -97,6 +97,23 @@
 
     const overview  = typeof regionOverview === "function" ? regionOverview(regionKey) : null;
 
+    // What the report says at theme level: the context it sets out before
+    // scoring a theme, and the key findings and recommendations it closes the
+    // theme with. One optional file per region, exactly like
+    // references-<region>.js, so a region without one draws as it always has
+    // and the 404 in the console is expected rather than a fault.
+    let findings = null;
+    loadFindings();
+
+    function loadFindings() {
+      if (!regionKey) return;
+      const tag = document.createElement("script");
+      tag.src = `findings-${regionKey}.js`;
+      tag.onload = () => { findings = window.CITY_FINDINGS || null; renderThemes(); };
+      tag.onerror = () => {};        // no file for this region, nothing to draw
+      document.head.appendChild(tag);
+    }
+
     if (rounds.length) {
       barEl.style.display = "flex";
       rounds.forEach((r, i) => {
@@ -235,8 +252,27 @@
     }
 
     // ── the accordion ───────────────────────────────────────────────────────
+    // One collapsed block. Deliberately no preview of the text and no count
+    // on the summary line: the page still reads as a score sheet at a glance,
+    // and the tag says which of the two kinds of block this is.
+    function block(b, tag, scope, extraClass, F) {
+      return `<details class="fcBlock${extraClass}">` +
+        `<summary><span class="fcTag${extraClass ? " fcTagCtx" : ""}">` +
+          `${NAP.esc(tag)}</span></summary>` +
+        `<div class="fcBlockBody">` +
+          NAP.fScope(b) +
+          `<div class="fcBody">${NAP.fBody(b.body, b.refs, scope, F.figures)}</div>` +
+          NAP.fRefs(b.refs, scope) +
+        `</div></details>`;
+    }
+
     function renderThemes() {
       const scores = currentScores();
+      // Findings belong to a round. Selecting an earlier round, or "— no
+      // assessment —", hides them rather than showing this round's
+      // conclusions against another round's scores.
+      const F = NAP.findingsFor(findings, roundIdx >= 0 && rounds[roundIdx]
+        ? rounds[roundIdx].date : null);
       const open = new Set(
         [...themesEl.querySelectorAll('.pBtn[aria-expanded="true"]')].map(b => b.dataset.pillar)
       );
@@ -271,10 +307,25 @@
                 `</span></a>`;
             }).join("");
           if (!rows) return "";
-          return `<div class="grp"><div class="grpName">${NAP.esc(g.groupTitle)}</div>${rows}</div>`;
+
+          // The report's key findings for this theme sit under the rows of
+          // the last category they cover, so a conclusion lands after every
+          // category it draws on rather than above half of them.
+          const blk = F.byGroup[g.groupId];
+          const found = blk ? block(blk, "Key findings and recommendations",
+            `g-${g.groupId}`, "", F) : "";
+
+          return `<div class="grp"><div class="grpName">${NAP.esc(g.groupTitle)}</div>` +
+            `${rows}${found}</div>`;
         }).join("");
 
         if (!groups) return "";
+
+        // Context opens the theme, because that is where the report puts it:
+        // the scenario it benchmarks against, the region's demand, and the
+        // section-opening tables and figures, all before a single score.
+        const ctx = F.byPillar[p.pillarId];
+        const context = ctx ? block(ctx, "Context", `c-${p.pillarId}`, " fcContext", F) : "";
 
         return `<section class="pillar">` +
           `<button class="pBtn" type="button" data-pillar="${NAP.esc(p.pillarId)}"` +
@@ -285,9 +336,11 @@
               (s.n ? ` · <strong>${s.n} scored</strong>` : "") + `</span>` +
             `<span class="pCar"></span>` +
           `</button>` +
-          `<div class="pBody${isOpen ? " open" : ""}">${groups}</div>` +
+          `<div class="pBody${isOpen ? " open" : ""}">${context}${groups}</div>` +
         `</section>`;
       }).join("");
+
+      NAP.fWireRefs(themesEl);
 
       themesEl.querySelectorAll(".pBtn").forEach(btn => {
         btn.addEventListener("click", () => {
