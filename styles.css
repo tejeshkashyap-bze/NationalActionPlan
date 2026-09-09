@@ -684,6 +684,27 @@ h3 {
 
 .pBody.open { display: block; }
 
+/* The theme button is one non-wrapping flex row, so on a phone the count and
+   the chevron were pushed off the right edge and the whole page scrolled
+   sideways. Long-standing, and renaming "groups" to "categories" made it
+   worse. On a narrow screen the count drops to its own line under the theme
+   name and the chevron keeps the right edge. */
+@media (max-width: 700px) {
+  .pBtn { flex-wrap: wrap; gap: 6px 12px; }
+  .pName { flex: 1 1 auto; min-width: 0; }
+  .pCar { order: 3; margin-left: auto; }
+  .pCount {
+    order: 4;
+    /* padding, not margin: a 100% flex-basis plus a left margin is wider
+       than the line it sits on. */
+    flex: 1 0 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+    padding-left: 38px;
+    white-space: normal;
+  }
+}
+
 @media (max-width: 640px) {
   .pBody { padding-left: 4px; }
 }
@@ -2103,6 +2124,48 @@ html[data-ramp="traffic"] {
 }
 
 /* ── the key ── */
+
+/* What the three levels are. This sits in the hero, continuing the lede, so
+   it is plain prose rather than a boxed card: a box here would cut the hero
+   in half and push the tiles and the wall down the page. */
+.cscLevels {
+  margin: 18px 0 14px;
+  max-width: 68ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cscDefList { margin: 0; max-width: 68ch; }
+.cscDefList > div { margin: 0 0 8px; }
+.cscDefList > div:last-child { margin-bottom: 0; }
+
+.cscDefList dt {
+  display: inline;
+  font-weight: 700;
+  color: var(--blue-deep);
+}
+/* dt and dd are both inline, so the whitespace between the tags collapses
+   away and the term runs into its definition. */
+.cscDefList dt::after { content: " "; }
+
+.cscDefList dd {
+  display: inline;
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.cscDefsMore {
+  margin: 14px 0 0;
+  max-width: 68ch;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+.cscDefsMore a { color: var(--blue); }
 
 .cscKeys {
   display: flex;

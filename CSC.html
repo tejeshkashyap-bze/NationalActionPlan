@@ -13,9 +13,33 @@
     <div class="hero tight">
       <div class="eyebrow">Methodology</div>
       <h1 class="wide">Critical Success Criteria</h1>
-      <p class="lede">Five themes, the groups within them, and every indicator a region is
-        assessed against — laid out as the framework is drawn. Indicators with a published
-        methodology are highlighted; select one to read it.</p>
+      <!-- The lede no longer counts the levels. The tiles below count them and
+           the definitions block above the wall names them, so saying it here
+           too made the same sentence land three times in a row. -->
+      <p class="lede">The framework every region is assessed against, laid out as it is
+        drawn in the reports. Indicators with a published methodology are highlighted;
+        select one to read it.</p>
+
+      <!-- What the three levels are. Straight after the lede, because it is
+           the same thought continued: the page says what it is, then what a
+           theme, a category and an indicator mean, then counts them in the
+           tiles. The counts in the sentence come from data.js so it cannot
+           drift from the wall below. -->
+      <p class="cscLevels" id="cscLevels"></p>
+      <dl class="cscDefList">
+        <div><dt>Themes</dt><dd>represent the top-level conditions that underpin
+          success, such as Enabling Infrastructure, Policy and Governance, and
+          Social Acceptance.</dd></div>
+        <div><dt>Categories</dt><dd>are sub-areas within each theme, such as water
+          infrastructure, workforce, or federal policy settings.</dd></div>
+        <div><dt>Indicators</dt><dd>are the specific, measurable criteria used to
+          assess whether each category is &lsquo;ready&rsquo; or needs
+          attention.</dd></div>
+      </dl>
+      <p class="cscDefsMore">For more details, see
+        <a href="https://www.bze.org.au/impact/national-action-plan/assessment-process"
+           target="_blank" rel="noopener">National Action Plan: Regional Assessment
+           Process (Version 2)</a>.</p>
       <div class="tiles" id="tiles"></div>
     </div>
 
@@ -50,11 +74,19 @@
 
     document.getElementById("tiles").innerHTML = [
       [CSC.length, "themes"],
-      [CSC.reduce((n, p) => n + p.groups.length, 0), "groups"],
+      // "categories" is what the reports call the second level, and the
+      // definitions block below uses that word. The data still calls them
+      // groups (groupId, groupTitle); only the label changed.
+      [CSC.reduce((n, p) => n + p.groups.length, 0), "categories"],
       [items.length, "indicators"],
       [nMethod, "with methodology"],
     ].map(([n, l]) => `<div class="tile"><div class="tileN">${n}</div>` +
       `<div class="tileL">${l}</div></div>`).join("");
+
+    const nGroups = CSC.reduce((n, p) => n + p.groups.length, 0);
+    document.getElementById("cscLevels").textContent =
+      `The Critical Success Criteria can be broken down into ${CSC.length} themes, ` +
+      `${nGroups} categories and ${items.length} indicators.`;
 
     document.getElementById("methodCount").textContent =
       `${nMethod} of ${items.length} indicators have a published methodology`;
