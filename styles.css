@@ -1952,6 +1952,45 @@ html[data-ramp="traffic"] {
 
 .iAside .xRow { padding: 9px 0; }
 
+/* A table or a box the report printed inside an indicator, carried into the
+   evidence text. The 720px floor that keeps a wide comparison table readable
+   elsewhere fights the 68ch prose column here, so inside .iProse the table
+   is allowed to wrap to the column instead, and .tableWrap still scrolls if
+   the viewport is narrower than that. */
+
+.iProse .tableWrap {
+  width: 100%;
+  margin: 0 0 14px;
+}
+
+.iProse .dataTable { min-width: 0; }
+
+.iProse .dataTable th,
+.iProse .dataTable td { padding: 9px 10px; font-size: 12.5px; }
+
+/* A boxed aside in a report, Box 1 in the Kwinana industry decarbonisation
+   assessment being the first of them. Same furniture as .iCallout, quieter,
+   and it sits in the flow of the prose rather than replacing it. */
+
+.evBox {
+  display: block;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line);
+  border-radius: var(--r);
+  background: var(--wash);
+  padding: 18px 22px;
+  margin: 0 0 14px;
+}
+
+.evBoxTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.evBox p { margin: 0; font-size: 14.5px; }
+
 /* ---------------------------------------------------------
    17. Utilities
    --------------------------------------------------------- */

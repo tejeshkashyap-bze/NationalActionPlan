@@ -89,8 +89,9 @@ page. It loads only `data.js`, `learn-data.js`, `indicator-icons.js` and
 
 The reports cite their sources — the Hunter and Gladstone reports with numbered
 endnotes, the Port Hedland report with author-date in the prose and a list per
-indicator. Those citations were carried into the site for Hunter Valley and
-Gladstone in August 2026, and for Port Hedland in September 2026, in two
+indicator, the Kwinana report with bare URLs inline and no list at all. Those
+citations were carried into the site for Hunter Valley and Gladstone in
+August 2026, and for Port Hedland and Kwinana in September 2026, in two
 halves:
 
 - **In the evidence text** — a marker per citation, written as
@@ -104,7 +105,10 @@ halves:
   entry keeps the number the printed report used, for tracing an entry back
   to the PDF; it is data only and is never shown. For Port Hedland, `report`
   is the entry's position in that indicator's own printed list, since the
-  report has no single numbered sequence.
+  report has no single numbered sequence. `references-kwinana.js` carries no
+  `report` field at all: the Kwinana report prints no reference list, so there
+  is no number to trace back to. Its citations were written from the sources
+  themselves, one entry per URL the report linked.
 
 `criterion.html` renders the list under the assessment on the Evidence tab
 and turns each marker into a jump link. It does not use the URL hash for
@@ -113,12 +117,12 @@ under the latest round only; an older round keeps its markers unresolved
 rather than borrowing a newer list. A region with no `references-` file
 draws exactly as before.
 
-Kwinana has no reference file yet, so its pages probe for one and get a 404 in
-the console — the same optional-file pattern as the region photo slot, and not
-a fault to chase. Port Hedland has a file, but it covers 19 of its 24
-indicators; the five federal-policy indicators whose evidence text is still
-Kwinana's are left out deliberately, and their pages simply render no
-References block.
+All four assessed regions now have a reference file. Kwinana's covers all 24
+of its indicators. Port Hedland's covers 19 of its 24; the five federal-policy
+indicators are left out deliberately, and their pages simply render no
+References block. A region with no file at all still probes for one and gets a
+404 in the console — the same optional-file pattern as the region photo slot,
+and not a fault to chase.
 
 When a new region's report is brought in, both halves have to move together.
 A marker whose number has no entry is left as plain text rather than linked,
@@ -169,13 +173,40 @@ the 404 in the console is expected rather than a fault.
   "5.6" look the same. Port Hedland cites author-date, so those citations are
   lifted out of the sentence into markers.
 - A table the report prints **inside an indicator** does not belong here. It
-  belongs to that indicator, and the mechanism for that is not built yet.
+  belongs to that indicator, and it goes into the evidence text instead — see
+  *Tables and boxes inside an indicator* below.
+
+Kwinana shows how uneven this material is between reports. Only Enabling
+Infrastructure has findings written for the whole theme. Industry Capability
+and Capacity closes on its single category. Policy and Governance closes on
+local government only, with nothing for federal or state policy. Social
+Acceptance closes under the land-use planning indicator, with nothing for
+benefit sharing or engagement. Those gaps are the report's; they are left as
+gaps rather than filled from a neighbouring section.
 
 `NAP.fBody`, `NAP.fScope`, `NAP.fRefs`, `NAP.fWireRefs` and `NAP.findingsFor`
 in `nap.js` do the rendering; the styles are the `fc*` block at the foot of
 `styles.css`. The three layout concepts this came from are in `scratch/`, with
 `scratch/README-findings-round.md` recording what was tried and what was wrong
 with the first cut.
+
+### Tables and boxes inside an indicator
+
+The Kwinana report prints a table inside two of its indicators and a boxed
+aside inside a third. Those belong to the indicator, not to the theme, so they
+live in `evidence-kwinana.js` as paragraphs that begin with a tag:
+`<div class="tableWrap"><table class="dataTable">…` for a table,
+`<aside class="evBox">` for a box. `criterion.html` passes a paragraph that
+starts with `<` through unescaped, which is what makes this work; `city.html`
+never renders evidence paragraphs, so nothing there has to change.
+
+The styles are at the end of section 16 of `styles.css`. Inside `.iProse` the
+720px floor on `.dataTable` is dropped, because it fights the 68ch prose
+column; the table wraps to the column instead and `.tableWrap` still scrolls
+on a narrow viewport.
+
+The report's own caption line, wherever the report put it relative to the
+table, is kept as a `<p class="note">`.
 
 ## The review loop
 
