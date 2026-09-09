@@ -2,23 +2,61 @@
 
 ## Where this stands
 
-The site's Port Hedland evidence was written from an earlier draft. A newer
-report — *Port Hedland Regional Readiness Report*, supplied September 2026 —
-has now been checked against it, indicator by indicator.
+**Resolved, 9 September 2026.** All 24 indicators were refreshed from the
+September 2026 *Port Hedland Regional Readiness Report*. The report is now the
+site's source of record for Port Hedland, on Tejesh's instruction.
 
-**Every score matches.** All 24 indicators carry the same score in the new
-report as in `scores.js`, and no grading scale has changed. Nothing in the
-round is wrong on that front.
+- **Every score matches** and no grading scale changed. The site's grading
+  scales were already the report's, so they were left untouched.
+- **The five Kwinana clones are gone.** Federal skills and training,
+  approvals, investment framework, R&D and procurement now carry the report's
+  Port Hedland text. Kwinana mentions across the whole region fell from 63 to
+  17, and all 17 that remain are the report's own comparisons between the two
+  precincts, including the state indicators that explicitly benchmark against
+  the Kwinana Regional Readiness Report.
+- **Industry decarbonisation is complete.** The company-by-company material
+  the site was missing is now in, rendered as labelled lists rather than
+  tables, along with the boxed note on why fossil fuel companies are excluded.
+  That section went from about 1,500 words to 3,750.
+- **The Fuel Tax Credit material is in**, in federal emissions reduction.
+- **References cover all 24 indicators**: 213 entries, 253 markers, every
+  marker resolving to an entry.
 
-**Sixteen indicators are settled.** Their text is the report's, bar the
-citations the house convention strips, and they now carry citation markers and
-a reference list (see `REFERENCES-IMPORT-NOTES.md`).
+### One deliberate departure from the report
 
-**Eight need a decision from you.** Five of those are the Kwinana clones the
-earlier version of this file recorded. The new report has localised them for
-Port Hedland; the site has not. Those five are deliberately excluded from
-`references-port-hedland.js` — attaching Port Hedland sources to sentences
-about Alcoa's Kwinana refinery would make a wrong claim look sourced.
+The **Capacity Investment Scheme** passage in federal emissions reduction is
+the September fact-check, not the report's wording. The report says the NWIS
+"lacks the centralised wholesale spot market the CIS requires" and cites
+"Allens 2024", which is not in its own reference list. The site's version also
+covers the Reserve Capacity Mechanism side and the absence of central
+dispatch, and is sourced to the ACCC's Pilbara ISOCo determination. It is the
+one entry in `references-port-hedland.js` carrying `report: null`.
+
+The WA approval bilateral question needed no departure: the report is right
+that WA holds an assessment bilateral only, and the site now carries the
+report's own text.
+
+### What the import surfaced in the report
+
+- **Fourteen in-text citations have no matching entry** in their section's
+  reference list, so they publish without a marker: Business Wire 2025,
+  DCCEEW 2025 and Parliament of Australia 2025 (federal emissions); Allens
+  2024 (federal procurement); NAIF 2026 and NZEA and RenewMap 2027 (federal
+  investment); ARENA 2026 and Mineral Resources 2026c (industry
+  decarbonisation); Parliament of WA 2023 and Government of Western Australia
+  2024 (state emissions); Government of Western Australia 2026 (water);
+  Government of Western Australia 2025 (community engagement).
+- **About 150 listed sources are never cited in the report's own prose**, so
+  they carry no marker. The worst are industry decarbonisation (42 of 72),
+  housing (15 of 21), effective community engagement (14 of 15) and LGA plans
+  (12 of 17). Same pattern as the eighteen unplaced Gladstone citations.
+- **Two unresolved `(ref)` placeholders** were stripped from the published
+  prose: the 11,065 additional workers by 2029 figure in federal skills, and
+  the ESP Policy threshold in federal procurement. Both claims are now
+  unsourced in the report and on the site.
+
+Everything below this line is the pre-refresh analysis, kept as the record of
+what was found and why.
 
 ## Indicator by indicator
 
@@ -49,11 +87,25 @@ about Alcoa's Kwinana refinery would make a wrong claim look sourced.
 | Wider community benefit sharing | 1 | Green iron vs green steel |
 | Effective community engagement | 2 | One reversed sentence, one new quote |
 
-## The five Kwinana clones
+## The five Kwinana clones — RESOLVED 9 September 2026
 
-The new report rewrites all five for Port Hedland and the eastern Pilbara.
-Replacing the site text with the report's would fix the problem this file was
-opened for. What changes, in substance and not just region names:
+The report rewrote all five for Port Hedland and the eastern Pilbara, and the
+site now carries that text. Recorded below is what actually changed, and three
+things worth knowing about the import:
+
+- **Two `(ref)` placeholders were stripped** from the published prose, in
+  skills and training (the 11,065 additional workers by 2029 figure) and in
+  procurement (the ESP Policy threshold). Both claims are now unsourced in the
+  report and on the site.
+- **One citation has no matching entry** in its section's reference list:
+  "NZEA and RenewMap 2027" in the investment framework. The sentence is
+  published without a marker.
+- **Eighteen sources across the five are listed in the report but never cited
+  in its own prose**, so they carry no marker: five each in skills and
+  training, approvals and investment framework, two in R&D, one in
+  procurement. Same pattern as the eighteen unplaced Gladstone citations.
+
+What changed in substance, and not just region names:
 
 - **Federal — research and development.** The projects change completely.
   Kwinana's BlueScope NeoSmelt ($19.8m), Calix ZESTY ($44.9m) and Rio Tinto's
