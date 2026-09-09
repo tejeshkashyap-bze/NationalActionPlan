@@ -197,12 +197,15 @@ indicator ids.
    not taken up. Kwinana and Port Hedland would need sourcing either way.
    Dropping a real `<key>.jpg` into `regions/` replaces a placeholder with no
    code change, because `.jpg` is probed before `.png`.
-8. **Gladstone's dates disagree.** `scores.js` puts the round at September
-   2025; every evidence entry in `evidence-gladstone.js` is dated March 2026.
-   One of them is wrong. `criterion.html` deliberately shows the round date in
-   the aside and the evidence dates only under Previous rounds, so the two
-   never appear side by side — but that hides the problem rather than fixing
-   it. This is a content call for me.
+8. **Hunter Valley's dates disagree.** `scores.js` puts the round at April
+   2025; every evidence entry in `evidence-hunter-valley.js` is dated March
+   2026, which is the import date rather than the assessment date. Both the
+   Kwinana and Port Hedland reports call the Hunter report May 2025, so there
+   are three candidate dates and the right one is a content call for me.
+   Gladstone had the same fault and is settled: September 2025 is the release
+   date, and `evidence-gladstone.js` now carries it. `criterion.html`
+   deliberately shows the round date in the aside and the evidence dates only
+   under Previous rounds, so the two never appear side by side.
 9. **The grading scale exists twice** — as signed-off wording in the first
    paragraph of every evidence entry, and as structured rows in
    `learn-data.js` (`scoringDescriptions`). `criterion.html` prefers the
