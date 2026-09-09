@@ -163,7 +163,7 @@ All seven comments in `review/comments.json` are marked `done` and the file is
 waiting on my **Clear** in the overlay, which is the reviewer's call.
 
 Data as at August 2026: 50 indicators, 4 assessed regions of 16 — Port Hedland
-24/50 and Kwinana 24/50 (both August 2026), Gladstone 20/50 (September 2025),
+24/50 and Kwinana 24/50 (both August 2026), Gladstone 20/50 (October 2025),
 Hunter Valley 19/50 (May 2025). 87 scores in total. 24 distinct indicators
 are scored somewhere; 26 have never been scored, and none of those 26 has a
 `learn-data.js` entry either. Every scored indicator has matching evidence,
@@ -200,7 +200,8 @@ indicator ids.
 8. **Round dates are settled.** Gladstone and Hunter Valley both used to
    carry the import date, March 2026, on every evidence entry while `scores.js`
    said something else. Tejesh has confirmed the release dates: Gladstone
-   September 2025, Hunter Valley May 2025. Both files and `scores.js` now
+   October 2025, Hunter Valley May 2025. Gladstone was briefly recorded as
+   September 2025 and corrected in September 2026. Both files and `scores.js` now
    agree, and all four regions match. `criterion.html` still shows the round
    date in the aside and the evidence dates only under Previous rounds, so if
    they ever drift again the difference stays visible. Now that they agree,

@@ -1,6 +1,6 @@
 // findings-gladstone.js — What the Gladstone report says at theme level.
 //
-// Taken from the Gladstone Regional Readiness Report (September 2025).
+// Taken from the Gladstone Regional Readiness Report (October 2025).
 // Optional, like references-gladstone.js: city.html loads it if it is there and
 // draws exactly as before if it is not.
 //
@@ -37,7 +37,7 @@
 // blocks only while that round is the one selected.
 
 window.CITY_FINDINGS = {
-  "round": "September 2025",
+  "round": "October 2025",
   "contexts": [
     {
       "pillar": "enabling-infrastructure",

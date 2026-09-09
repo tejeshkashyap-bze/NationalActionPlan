@@ -1,6 +1,6 @@
 // references-gladstone.js — Sources behind the Gladstone assessment.
 //
-// One list per indicator, taken from the Gladstone Regional Readiness Report (September 2025).
+// One list per indicator, taken from the Gladstone Regional Readiness Report (October 2025).
 // Entries are numbered from 1 within each indicator, in the order the
 // markers appear in the evidence text; `report` keeps the number the
 // printed report used, so an entry can be traced back to it.

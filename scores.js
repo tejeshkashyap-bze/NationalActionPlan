@@ -33,7 +33,7 @@ const SCORES = {
   ],
   "gladstone": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "scores": {
         "renewable-energy-generation": 3,
         "transmission-network": 2,

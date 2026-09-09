@@ -619,7 +619,7 @@ handles these.
   both "(May 2026)" in state R&D and "(April 2026)" in state procurement, and
   the project's own metadata dates the Kwinana round August 2026. Three dates
   for one report, still unsettled. The Hunter and Gladstone halves of this are
-  now resolved: the site dates them May 2025 and September 2025, matching the
+  now resolved: the site dates them May 2025 and October 2025, matching the
   reports. Only the Kwinana report's own dating still needs settling before
   publication.
 

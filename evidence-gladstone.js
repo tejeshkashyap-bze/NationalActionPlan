@@ -1,7 +1,7 @@
 window.CITY_EVIDENCE = {
   "renewable-energy-generation": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Poor progress towards 2035 Renewable Energy Zone (REZ) requirements. Less than 25% of required capacity is in development, with 15% or less approved and 10% or less in construction or operating.</li><li><strong>2</strong> – Improving progress towards 2035 REZ requirements. Between 25% and 50% of required capacity is in development, with 15-40% approved and 10-25% in construction or operating.</li><li><strong>3</strong> – Moderate progress towards 2035 REZ requirements. Between 50% and 75% of required capacity is in development, with 40-60% approved and 25-40% in construction or operating.</li><li><strong>4</strong> – Strong progress towards 2035 REZ requirements. Between 75% and 100% of required capacity is in development, with 60-85% approved and 40-50% in construction or operating.</li><li><strong>5</strong> – Exemplary progress towards 2035 REZ requirements. More than 100% of required capacity is in development, with over 85% approved and over 50% in construction or operating.</li></ul>",
@@ -16,7 +16,7 @@ window.CITY_EVIDENCE = {
   ],
   "transmission-network": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 2,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal Transmission Network Service Provider (TNSP) planning for industrial electrification. Required AEMO Integrated System Plan (ISP) Optimal Development Path (ODP) projects well behind schedule with limited Renewable Energy Zone (REZ) activity.</li><li><strong>2</strong> – Planning for partial decarbonisation of existing industry. Some ODP actionable projects on schedule; preparatory REZ work underway but no declarations.</li><li><strong>3</strong> – Planning for full decarbonisation of existing industry. All ODP actionable projects on schedule; no progress on additional actionable ISP Green Energy Exports scenario (GEE) projects. Moderate REZ progress with some declarations.</li><li><strong>4</strong> – Planning for full decarbonisation & modest new green industries. All actionable ISP projects on schedule; some progress on GEE projects. All relevant REZs are declared with connection rights and transmission buildout on track, but short of GEE requirements.</li><li><strong>5</strong> – Planning for full decarbonisation & new green export industries. All actionable GEE projects on schedule; REZ development advanced to meet or exceed GEE requirements.</li></ul>",
@@ -33,7 +33,7 @@ window.CITY_EVIDENCE = {
   ],
   "distribution-network": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 2,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – No electrification plans, including at the household level.</li><li><strong>2</strong> – Limited electrification planning. Planning for modest consumer energy resources (CER) uptake, but no industry electrification. Limited forecasting and network utilisation transparency.</li><li><strong>3</strong> – Moderate electrification planning. Planning for high uptake of CER, but no industry electrification. Improving forecasting and network utilisation transparency.</li><li><strong>4</strong> – Strong electrification planning. Planning for high uptake of CER and a modest level of industry electrification. Strong forecasting and network utilisation transparency.</li><li><strong>5</strong> – Exemplary electrification planning. Planning for high CER uptake and industrial electrification. Comprehensive forecasting and network status transparency.</li></ul>",
@@ -49,7 +49,7 @@ window.CITY_EVIDENCE = {
   ],
   "energy-storage": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Poor progress towards 2035 storage requirements. Less than 25% of required capacity/depth is in development, with 15% or less approved and 10% or less in construction or operating.</li><li><strong>2</strong> – Improving progress towards 2035 storage requirements. Between 25% and 50% of required capacity/depth is in development, with 15-40% approved and 10-25% in construction or operating.</li><li><strong>3</strong> – Moderate progress towards 2035 storage requirements. Between 50% and 75% of required capacity/depth is in development, with 40-60% approved and 25-40% in construction or operating.</li><li><strong>4</strong> – Strong progress towards 2035 storage requirements. Between 75% and 100% of required capacity/depth is in development, with 60-85% approved and 40-50% in construction or operating.</li><li><strong>5</strong> – Exemplary progress towards 2035 storage requirements. Over 100% of required capacity/depth is in development, with more than 85% approved and more than 50% in construction or operating.</li></ul>",
@@ -66,7 +66,7 @@ window.CITY_EVIDENCE = {
   ],
   "hydrogen-network": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 2,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Poor progress towards 2035 hydrogen production requirements. Less than 25% of required production capacity in development, with 15% or less approved and 10% or less in construction or operating.</li><li><strong>2</strong> – Improving progress towards 2035 hydrogen production requirements. Between 25% and 50% of required production capacity in development, with 15-40% approved and 10-25% in construction or operating.</li><li><strong>3</strong> – Moderate progress towards 2035 hydrogen production requirements. Between 50% and 75% of required production capacity is in development, with 40-60% approved and 25-40% in construction or operating.</li><li><strong>4</strong> – Good progress towards 2035 hydrogen production requirements. Between 75% and 100% of required production capacity in development, with 60-80% approved and 40-50% in construction or operating.</li><li><strong>5</strong> – Excellent progress towards 2035 hydrogen production requirements. Over 100% of required production capacity in development, with over 80% approved and over 50% in construction or operating.</li></ul>",
@@ -82,7 +82,7 @@ window.CITY_EVIDENCE = {
   ],
   "industry-decarbonisation-plans": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Most companies have plans with no targets and or not funded (Limited plan / insufficient targets)</li><li><strong>2</strong> – Most companies have plans with targets, but only some are aligned to 75% emissions reduction by 2035. Not all commitments are funded (Basic Plans / Uncertain Implementation Pathways)</li><li><strong>3</strong> – Most companies have plans with targets, and most are aligned to 75% emissions reduction by 2035. Key commitments are funded (Intermediate Plans / Developing Momentum)</li><li><strong>4</strong> – All major companies have plans with targets aligned with 75% emissions reduction by 2035, with commitments funded but no internal performance initiatives (Comprehensive Plans / Aligned with Regional Goals)</li><li><strong>5</strong> – All major companies have plans aligned with 75% emissions reduction by 2035, are fully funded and have internal performance initiatives (Leading Practice / Exemplary Industry Leadership)</li></ul>",
@@ -99,7 +99,7 @@ window.CITY_EVIDENCE = {
   ],
   "federal-emissions-commitment": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 2,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal commitment (Severe Deficiency)</li><li><strong>2</strong> – Basic commitment (Moderate Deficiency)</li><li><strong>3</strong> – Moderate commitment (Developing)</li><li><strong>4</strong> – Strong commitment (Effective)</li><li><strong>5</strong> – Exemplary commitment (Leading Practice)</li></ul>",
@@ -113,7 +113,7 @@ window.CITY_EVIDENCE = {
   ],
   "federal-skills-training": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -127,7 +127,7 @@ window.CITY_EVIDENCE = {
   ],
   "federal-approvals": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -141,7 +141,7 @@ window.CITY_EVIDENCE = {
   ],
   "federal-investment-framework": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -155,7 +155,7 @@ window.CITY_EVIDENCE = {
   ],
   "federal-rd": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 4,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -168,7 +168,7 @@ window.CITY_EVIDENCE = {
   ],
   "federal-procurement": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -184,7 +184,7 @@ window.CITY_EVIDENCE = {
   ],
   "state-emissions-commitment": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal commitment (Severe Deficiency)</li><li><strong>2</strong> – Basic commitment (Moderate Deficiency)</li><li><strong>3</strong> – Moderate commitment (Developing)</li><li><strong>4</strong> – Strong commitment (Effective)</li><li><strong>5</strong> – Exemplary commitment (Leading Practice)</li></ul>",
@@ -200,7 +200,7 @@ window.CITY_EVIDENCE = {
   ],
   "state-skills-training": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -213,7 +213,7 @@ window.CITY_EVIDENCE = {
   ],
   "state-approvals": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 2,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -226,7 +226,7 @@ window.CITY_EVIDENCE = {
   ],
   "state-investment-framework": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -241,7 +241,7 @@ window.CITY_EVIDENCE = {
   ],
   "state-rd": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 2,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -256,7 +256,7 @@ window.CITY_EVIDENCE = {
   ],
   "state-procurement": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal support (Severe Deficiency)</li><li><strong>2</strong> – Basic support (Moderate Deficiency)</li><li><strong>3</strong> – Moderate support (Developing)</li><li><strong>4</strong> – Strong support (Effective)</li><li><strong>5</strong> – Exemplary support (Leading Practice)</li></ul>",
@@ -272,7 +272,7 @@ window.CITY_EVIDENCE = {
   ],
   "lga-decarbonisation-plans": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 4,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal Plan (Severe Deficiency)</li><li><strong>2</strong> – Basic Plan (Moderate Deficiency)</li><li><strong>3</strong> – Moderate Plan (Developing)</li><li><strong>4</strong> – Strong Plan (Effective)</li><li><strong>5</strong> – Exemplary Plan (Leading Practice)</li></ul>",
@@ -286,7 +286,7 @@ window.CITY_EVIDENCE = {
   ],
   "strategic-nature-positive-planning": [
     {
-      "date": "September 2025",
+      "date": "October 2025",
       "score": 3,
       "paragraphs": [
         "<strong>Indicator grading scale</strong><ul class=\"bulletList\" style=\"margin-top:6px\"><li><strong>1</strong> – Minimal level of planning (Severe Deficiency)</li><li><strong>2</strong> – Basic level of planning (Moderate Deficiency)</li><li><strong>3</strong> – Moderate level of planning (Developing)</li><li><strong>4</strong> – Strong level of planning (Effective)</li><li><strong>5</strong> – Exemplary level of planning (Leading Practice)</li></ul>",

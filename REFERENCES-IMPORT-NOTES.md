@@ -1,6 +1,6 @@
 # Bringing the report citations into the site — August 2026
 
-The Hunter (May 2025) and Gladstone (September 2025) Regional Readiness Reports
+The Hunter (May 2025) and Gladstone (October 2025) Regional Readiness Reports
 cite their sources with numbered endnotes: 101 in the Hunter, 169 in Gladstone.
 Those citations had not been carried into the site — the house convention
 stripped them when the evidence text was written up.
